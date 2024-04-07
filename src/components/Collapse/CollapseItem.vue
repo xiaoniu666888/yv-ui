@@ -17,6 +17,31 @@ const handleClick = () => {
     collapseContext?.handleItemClick(props.name)
     // console.log(isActive.value)
 }
+
+const transitionEvents: Record<string, (el: HTMLElement) => void> = {
+    beforeEnter(el) {
+        el.style.height = '0px'
+        el.style.overflow = 'hidden'
+    },
+    enter(el) {
+        el.style.height = `${el.scrollHeight}px`
+    },
+    afterEnter(el) {
+        el.style.height = ''
+        el.style.overflow = ''
+    },
+    beforeLeave(el) {
+        el.style.height = `${el.scrollHeight}px`
+        el.style.overflow = 'hidden'
+    },
+    leave(el) {
+        el.style.height = '0px'
+    },
+    afterLeave(el) {
+        el.style.height = ''
+        el.style.overflow = ''
+    }
+}
 </script>
 
 
@@ -24,12 +49,17 @@ const handleClick = () => {
     <div class="yv-collapse-item" :class="{
         'is-disabled': props.disabled
     }">
-        <div class="yv-collapse-item_header" :id="`item-header-${props.name}`" @click="handleClick">
+        <div class="yv-collapse-item__header" :id="`item-header-${props.name}`" @click="handleClick">
             <slot name="title">{{ title }}</slot>
         </div>
-        <div class="yv-collapse-item_content" :id="`item-content-${props.name}`" v-if="isActive">
-            <slot></slot>
-        </div>
+        <Transition name="slide" v-on="transitionEvents">
+            <div class="yv-collapse-item__wrapper" v-show="isActive">
+                <div class="yv-collapse-item__content" :id="`item-content-${props.name}`">
+                    <slot></slot>
+                </div>
+            </div>
+        </Transition>
+
 
     </div>
 </template>

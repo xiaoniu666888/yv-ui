@@ -7,13 +7,19 @@ import CollapseItem from './components/Collapse/CollapseItem.vue';
 
 const buttonRef = ref<ButtonInstance | null>(null)
 onMounted(() => {
-  if (buttonRef.value)
+  if (buttonRef.value) {
     console.log(buttonRef.value.ref)
+  }
+
+  setTimeout(() => {
+    openValue.value.push('b')
+  }, 2000);
 })
 const handleClick = () => {
   console.log("button")
   alert("button")
 }
+const openValue = ref(['a'])
 </script>
 
 <template>
@@ -21,12 +27,8 @@ const handleClick = () => {
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-
-
     </div>
-
   </header>
-
   <main>
     <div>
       <div class="button">
@@ -56,24 +58,23 @@ const handleClick = () => {
     </div>
     <hr>
     <div class="collapse">
-      <Collapse>
+
+      <Collapse v-model="openValue" accordion>
         <CollapseItem name="a" title="Title A">
           <h1>headline title</h1>
           <div>this is content </div>
         </CollapseItem>
-      </Collapse>
-      <hr>
-      <Collapse>
+
         <CollapseItem name="b" title="Title B">
           <div>this is content b</div>
         </CollapseItem>
-      </Collapse>
-      <hr>
-      <Collapse>
+
         <CollapseItem name="c" title="Disabled Title" disabled>
           <div>this is content c</div>
         </CollapseItem>
+
       </Collapse>
+      {{ openValue }}
     </div>
 
   </main>
