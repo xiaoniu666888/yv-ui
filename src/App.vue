@@ -2,6 +2,8 @@
 import Button from './components/Button/Button.vue'
 import { ref, onMounted } from 'vue';
 import type { ButtonInstance } from './components/Button/types';
+import Collapse from './components/Collapse/Collapse.vue';
+import CollapseItem from './components/Collapse/CollapseItem.vue';
 
 const buttonRef = ref<ButtonInstance | null>(null)
 onMounted(() => {
@@ -10,6 +12,7 @@ onMounted(() => {
 })
 const handleClick = () => {
   console.log("button")
+  alert("button")
 }
 </script>
 
@@ -33,9 +36,9 @@ const handleClick = () => {
         <Button type="danger">danger</Button>
         <Button type="warning">warning</Button>
         <Button type="info">info</Button>
-        <Button size="large">Large</Button>
-        <Button size="small">Small</Button>
+
       </div>
+      <hr>
       <div class="button">
         <Button type="primary" plain>primary</Button>
         <Button type="success" plain>success</Button>
@@ -43,11 +46,34 @@ const handleClick = () => {
         <Button type="warning" plain>warning</Button>
         <Button type="info" plain>info</Button>
       </div>
+      <hr>
       <div class="button">
+        <Button size="large">Large</Button>
+        <Button size="small">Small</Button>
         <Button type="info" round> circle </Button>
         <Button type="success" circle>cilcle</Button>
       </div>
-
+    </div>
+    <hr>
+    <div class="collapse">
+      <Collapse>
+        <CollapseItem name="a" title="Title A">
+          <h1>headline title</h1>
+          <div>this is content </div>
+        </CollapseItem>
+      </Collapse>
+      <hr>
+      <Collapse>
+        <CollapseItem name="b" title="Title B">
+          <div>this is content b</div>
+        </CollapseItem>
+      </Collapse>
+      <hr>
+      <Collapse>
+        <CollapseItem name="c" title="Disabled Title" disabled>
+          <div>this is content c</div>
+        </CollapseItem>
+      </Collapse>
     </div>
 
   </main>
@@ -82,7 +108,8 @@ header {
 }
 
 .button {
-  width: 500px;
+  width: 600px;
   display: flex;
+  justify-content: space-around;
 }
 </style>
