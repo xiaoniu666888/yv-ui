@@ -8,6 +8,9 @@ onMounted(() => {
   if (buttonRef.value)
     console.log(buttonRef.value.ref)
 })
+const handleClick = () => {
+  console.log("button")
+}
 </script>
 
 <template>
@@ -15,11 +18,37 @@ onMounted(() => {
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <Button type="danger" ref="buttonRef" plain disabled> Test Button </Button>
+
+
     </div>
+
   </header>
 
   <main>
+    <div>
+      <div class="button">
+        <Button @click="handleClick()">default</Button>
+        <Button type="primary">primary</Button>
+        <Button type="success">success</Button>
+        <Button type="danger">danger</Button>
+        <Button type="warning">warning</Button>
+        <Button type="info">info</Button>
+        <Button size="large">Large</Button>
+        <Button size="small">Small</Button>
+      </div>
+      <div class="button">
+        <Button type="primary" plain>primary</Button>
+        <Button type="success" plain>success</Button>
+        <Button type="danger" plain>danger</Button>
+        <Button type="warning" plain>warning</Button>
+        <Button type="info" plain>info</Button>
+      </div>
+      <div class="button">
+        <Button type="info" round> circle </Button>
+        <Button type="success" circle>cilcle</Button>
+      </div>
+
+    </div>
 
   </main>
 </template>
@@ -50,5 +79,10 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
+
+.button {
+  width: 500px;
+  display: flex;
 }
 </style>
