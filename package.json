@@ -1,29 +1,20 @@
 {
-  "name": "yv",
-  "version": "0.0.0",
+  "name": "yv-ui",
   "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test:unit": "vitest",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "vue": "^3.4.21"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.3.3",
     "@vitejs/plugin-vue": "^5.0.4",
-    "@vue/eslint-config-prettier": "^8.0.0",
-    "@vue/test-utils": "^2.4.5",
-    "eslint": "^8.49.0",
-    "eslint-plugin-vue": "^9.17.0",
-    "jsdom": "^24.0.0",
-    "prettier": "^3.0.3",
-    "vite": "^5.1.6",
-    "vitest": "^1.4.0"
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vue-tsc": "^2.0.6"
   }
 }
