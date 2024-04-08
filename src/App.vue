@@ -57,6 +57,11 @@ const openValue = ref(['a'])
         <Button type="info" round> circle </Button>
         <Button type="success" circle>cilcle</Button>
       </div>
+      <hr>
+      <div class="button">
+        <Button size="large" loading>Loading</Button>
+        <Button size="large" icon="arrow-down">Icon</Button>
+      </div>
     </div>
     <hr>
     <div class="collapse">

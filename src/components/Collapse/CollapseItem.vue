@@ -2,6 +2,7 @@
 import { inject, computed } from 'vue';
 import { collapseContextKey } from './types';
 import type { CollapseItemProps } from './types';
+import Icon from '../Icon/Icon.vue';
 
 defineOptions({
     name: "YvCollapseItem"
@@ -49,8 +50,13 @@ const transitionEvents: Record<string, (el: HTMLElement) => void> = {
     <div class="yv-collapse-item" :class="{
         'is-disabled': props.disabled
     }">
-        <div class="yv-collapse-item__header" :id="`item-header-${props.name}`" @click="handleClick">
+        <div class="yv-collapse-item__header" :class="{
+            'is-disabled': disabled,
+            'is-active': isActive
+
+        }" :id="`item-header-${props.name}`" @click="handleClick">
             <slot name="title">{{ title }}</slot>
+            <Icon icon="angle-right" class="header-angle"></Icon>
         </div>
         <Transition name="slide" v-on="transitionEvents">
             <div class="yv-collapse-item__wrapper" v-show="isActive">

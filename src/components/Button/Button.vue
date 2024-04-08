@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { ButtonProps } from './types';
+import Icon from '../Icon/Icon.vue'
 defineOptions({
     name: "YButton"
 })
@@ -22,7 +23,9 @@ defineExpose({
             'is-round': round,
             'is-circle': circle,
             'is-disabled': disabled
-        }" :disabled="disabled" :autofocus="autofocus" :type="nativeType">
+        }" :disabled="disabled || loading" :autofocus="autofocus" :type="nativeType">
+            <Icon :icon="icon" v-if="icon"></Icon>
+            <Icon icon="spinner" spin v-if="loading"></Icon>
             <span>
                 <slot></slot>
             </span>
