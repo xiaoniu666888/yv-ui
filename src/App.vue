@@ -4,6 +4,7 @@ import { ref, onMounted } from 'vue';
 import type { ButtonInstance } from './components/Button/types';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
+import Icon from './components/Icon/Icon.vue';
 
 const buttonRef = ref<ButtonInstance | null>(null)
 onMounted(() => {
@@ -29,6 +30,7 @@ const openValue = ref(['a'])
     <div class="wrapper">
     </div>
   </header>
+
   <main>
     <div>
       <div class="button">
@@ -76,7 +78,14 @@ const openValue = ref(['a'])
       </Collapse>
       {{ openValue }}
     </div>
-
+    <hr>
+    <div class="icon">
+      <Icon icon="user" type="warning" size="2xl" />
+      <Icon icon="arrow-up" type="success" size="2xl" />
+      <Icon icon="arrow-down" type="primary" size="2xl" />
+      <Icon icon="arrow-left" type="danger" size="2xl" />
+      <Icon icon="arrow-right" type="info" size="2xl" />
+    </div>
   </main>
 </template>
 
