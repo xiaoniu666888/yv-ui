@@ -15,22 +15,20 @@ defineExpose({
 </script>
 
 <template>
-    <div>
-        <button ref="_ref" class="yv-button" :class="{
-            [`yv-button--${type}`]: type,
-            [`yv-button--${size}`]: size,
-            'is-plain': plain,
-            'is-round': round,
-            'is-circle': circle,
-            'is-disabled': disabled
-        }" :disabled="disabled || loading" :autofocus="autofocus" :type="nativeType">
-            <Icon :icon="icon" v-if="icon"></Icon>
-            <Icon icon="spinner" spin v-if="loading"></Icon>
-            <span>
-                <slot></slot>
-            </span>
-        </button>
-    </div>
+    <button ref="_ref" class="yv-button" :class="{
+        [`yv-button--${type}`]: type,
+        [`yv-button--${size}`]: size,
+        'is-plain': plain,
+        'is-round': round,
+        'is-circle': circle,
+        'is-disabled': disabled
+    }" :disabled="disabled || loading" :autofocus="autofocus" :type="nativeType">
+        <Icon :icon="icon" v-if="icon"></Icon>
+        <Icon icon="spinner" spin v-if="loading"></Icon>
+        <span>
+            <slot></slot>
+        </span>
+    </button>
 </template>
 
 
