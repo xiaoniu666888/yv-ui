@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import Button from './components/Button/Button.vue'
 import { ref, onMounted } from 'vue';
-import type { ButtonInstance } from './components/Button/types';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
 import Tooltip from './components/Tooltip/Tooltip.vue';
+
+import type { ButtonInstance } from './components/Button/types';
+import type { TooltipInstance } from './components/Tooltip/types';
+
 const buttonRef = ref<ButtonInstance | null>(null)
+const toolTipRef = ref<TooltipInstance | null>(null)
 onMounted(() => {
   if (buttonRef.value) {
     console.log(buttonRef.value.ref)
@@ -23,6 +27,13 @@ const handleClick = () => {
 }
 const openValue = ref(['a'])
 const trigger = ref<any>('hover')
+
+const handleClickOpen = () => {
+  toolTipRef.value?.show()
+}
+const handleClickClose = () => {
+  toolTipRef.value?.hide()
+}
 </script>
 
 <template>
@@ -94,10 +105,18 @@ const trigger = ref<any>('hover')
     </div>
 
     <hr>
-
-    <Tooltip content="Tooltip" placement="top" :trigger="trigger">
+    <h1>hover或click处理</h1>
+    <Tooltip ref="toolTipRef" content="Tooltip" placement="top" :trigger="trigger">
       Tooltip
     </Tooltip>
+    <hr>
+    <h1>手动处理</h1>
+    <Tooltip ref="toolTipRef" content="Tooltip" placement="top" :trigger="trigger" manual>
+      Tooltip
+    </Tooltip>
+    <hr>
+    <Button size="small" @click="handleClickOpen()">open Tooltip</Button>
+    <Button size="small" @click="handleClickClose()">close Tooltip</Button>
   </main>
 </template>
 

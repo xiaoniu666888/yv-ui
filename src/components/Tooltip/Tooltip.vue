@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, watch, reactive } from 'vue';
+import { ref, watch, reactive, onMounted } from 'vue';
 import { createPopper } from '@popperjs/core'
-import type { TooltipProps, TooltipEmits } from './types';
+import useCilckOutside from '@/hooks/utilTooltip'
+import type { TooltipProps, TooltipEmits, TooltipInstance } from './types'
 import type { Instance } from '@popperjs/core'
 
 const props = withDefaults(defineProps<TooltipProps>(), {
@@ -11,6 +12,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 const triggerNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
 const isOpen = ref<boolean>(false)
+const popperContainNode = ref<HTMLElement>()
 // popper实例
 let popperInstance: null | Instance = null
 const emits = defineEmits<TooltipEmits>()
@@ -39,8 +41,9 @@ const attachEvents = () => {
         events['click'] = handlePopper
     }
 }
-attachEvents()
-
+if (!props.manual) {
+    attachEvents()
+}
 watch(isOpen, (newVal) => {
     if (newVal) {
         if (triggerNode.value && popperNode.value) {
@@ -57,11 +60,32 @@ watch(() => props.trigger, (newVal, oldVal) => {
         attachEvents()
     }
 })
-// watch()
+watch(() => props.manual, (isManual) => {
+    if (isManual) {
+        events = {}
+        outerEvents = {}
+    } else {
+        attachEvents()
+    }
+})
+// 点击组件外部也会关闭提示框
+useCilckOutside(popperContainNode, () => {
+    if (props.trigger && isOpen.value && !props.manual) {
+        // 借用hover的方法关闭
+        hoverClose()
+    }
+})
+onMounted(() => {
+    popperInstance?.destroy()
+})
+defineExpose<TooltipInstance>({
+    'show': hoverOpen,
+    'hide': hoverClose
+})
 </script>
 
 <template>
-    <div class="yv-tooltip" v-on="outerEvents" style="border: 1px solid red;">
+    <div class="yv-tooltip" ref="popperContainNode" v-on="outerEvents" style="border: 1px solid red;">
         <!-- 触发节点 -->
         <div class="yv-tooltip__trigger" v-on="events" ref="triggerNode">
             <slot></slot>
