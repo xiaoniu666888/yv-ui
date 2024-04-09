@@ -8,9 +8,10 @@ import Tooltip from './components/Tooltip/Tooltip.vue';
 
 import type { ButtonInstance } from './components/Button/types';
 import type { TooltipInstance } from './components/Tooltip/types';
-
+import type { Options } from '@popperjs/core';
 const buttonRef = ref<ButtonInstance | null>(null)
 const toolTipRef = ref<TooltipInstance | null>(null)
+const options: Partial<Options> = { placement: 'top', strategy: 'fixed' }
 onMounted(() => {
   if (buttonRef.value) {
     console.log(buttonRef.value.ref)
@@ -18,7 +19,7 @@ onMounted(() => {
 
   setTimeout(() => {
     openValue.value.push('b')
-    trigger.value = 'click'
+    // trigger.value = 'click'
   }, 2000);
 })
 const handleClick = () => {
@@ -106,12 +107,13 @@ const handleClickClose = () => {
 
     <hr>
     <h1>hover或click处理</h1>
-    <Tooltip ref="toolTipRef" content="Tooltip" placement="top" :trigger="trigger">
+    <Tooltip ref="toolTipRef" content="Tooltip" placement="right" :trigger="trigger" :open-delay="1000"
+      :close-delay="1000">
       Tooltip
     </Tooltip>
     <hr>
     <h1>手动处理</h1>
-    <Tooltip ref="toolTipRef" content="Tooltip" placement="top" :trigger="trigger" manual>
+    <Tooltip ref="toolTipRef" content="Tooltip" placement="top" :trigger="trigger" manual :popper-options="options">
       Tooltip
     </Tooltip>
     <hr>
