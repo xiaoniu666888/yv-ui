@@ -5,7 +5,7 @@ import type { ButtonInstance } from './components/Button/types';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
-
+import Tooltip from './components/Tooltip/Tooltip.vue';
 const buttonRef = ref<ButtonInstance | null>(null)
 onMounted(() => {
   if (buttonRef.value) {
@@ -14,6 +14,7 @@ onMounted(() => {
 
   setTimeout(() => {
     openValue.value.push('b')
+    trigger.value = 'click'
   }, 2000);
 })
 const handleClick = () => {
@@ -21,12 +22,12 @@ const handleClick = () => {
   alert("button")
 }
 const openValue = ref(['a'])
+const trigger = ref<any>('hover')
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
     <div class="wrapper">
     </div>
   </header>
@@ -91,6 +92,12 @@ const openValue = ref(['a'])
       <Icon icon="arrow-left" type="danger" size="2xl" />
       <Icon icon="arrow-right" type="info" size="2xl" />
     </div>
+
+    <hr>
+
+    <Tooltip content="Tooltip" placement="top" :trigger="trigger">
+      Tooltip
+    </Tooltip>
   </main>
 </template>
 
