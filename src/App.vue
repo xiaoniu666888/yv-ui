@@ -5,10 +5,12 @@ import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
 import Tooltip from './components/Tooltip/Tooltip.vue';
+import Dropdown from './components/Dropdown/Dropdown.vue';
 
 import type { ButtonInstance } from './components/Button/types';
 import type { TooltipInstance } from './components/Tooltip/types';
 import type { Options } from '@popperjs/core';
+import type { MenuOption } from './components/Dropdown/types';
 const buttonRef = ref<ButtonInstance | null>(null)
 const toolTipRef = ref<TooltipInstance | null>(null)
 const options: Partial<Options> = { placement: 'top', strategy: 'fixed' }
@@ -35,6 +37,13 @@ const handleClickOpen = () => {
 const handleClickClose = () => {
   toolTipRef.value?.hide()
 }
+
+const optionsDrown: MenuOption[] = [
+  // { key: 1, label: h('b', 'this is bold') },
+  { key: 2, label: 'item2', disabled: true },
+  { key: 3, label: 'item3', divided: true },
+  { key: 4, label: 'item4' }
+]
 </script>
 
 <template>
@@ -119,6 +128,17 @@ const handleClickClose = () => {
     <hr>
     <Button size="small" @click="handleClickOpen()">open Tooltip</Button>
     <Button size="small" @click="handleClickClose()">close Tooltip</Button>
+
+    <hr>
+
+
+
+    <h1>点击</h1>
+    <Dropdown :menu-options="optionsDrown" placement="bottom" trigger="click">
+      Tooltip
+    </Dropdown>
+    <hr>
+
   </main>
 </template>
 
