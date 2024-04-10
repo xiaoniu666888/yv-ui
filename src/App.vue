@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Button from './components/Button/Button.vue'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, h } from 'vue';
 import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
@@ -13,6 +13,7 @@ import type { Options } from '@popperjs/core';
 import type { MenuOption } from './components/Dropdown/types';
 const buttonRef = ref<ButtonInstance | null>(null)
 const toolTipRef = ref<TooltipInstance | null>(null)
+const DropdownRef = ref<TooltipInstance | null>(null)
 const options: Partial<Options> = { placement: 'top', strategy: 'fixed' }
 onMounted(() => {
   if (buttonRef.value) {
@@ -33,17 +34,26 @@ const trigger = ref<any>('hover')
 
 const handleClickOpen = () => {
   toolTipRef.value?.show()
+  DropdownRef.value?.show()
 }
 const handleClickClose = () => {
   toolTipRef.value?.hide()
+  DropdownRef.value?.hide()
 }
 
 const optionsDrown: MenuOption[] = [
-  // { key: 1, label: h('b', 'this is bold') },
+  { key: 1, label: h('b', 'this is bold') },
   { key: 2, label: 'item2', disabled: true },
   { key: 3, label: 'item3', divided: true },
   { key: 4, label: 'item4' }
 ]
+
+const handleClickDrop = (e: any) => {
+  console.log('handleClickDrop=>', e)
+}
+const handleClickVisible = (e: any) => {
+  console.log("handleClickVisible=>", e)
+}
 </script>
 
 <template>
@@ -125,6 +135,7 @@ const optionsDrown: MenuOption[] = [
     <Tooltip ref="toolTipRef" content="Tooltip" placement="top" :trigger="trigger" manual :popper-options="options">
       Tooltip
     </Tooltip>
+
     <hr>
     <Button size="small" @click="handleClickOpen()">open Tooltip</Button>
     <Button size="small" @click="handleClickClose()">close Tooltip</Button>
@@ -134,7 +145,8 @@ const optionsDrown: MenuOption[] = [
 
 
     <h1>点击</h1>
-    <Dropdown :menu-options="optionsDrown" placement="bottom" trigger="click">
+    <Dropdown :menu-options="optionsDrown" placement="bottom" trigger="click" @select="handleClickDrop"
+      @visible-change="handleClickVisible" ref="DropdownRef">
       Tooltip
     </Dropdown>
     <hr>

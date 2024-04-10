@@ -3,6 +3,7 @@ import type { TooltipProps } from '../Tooltip/types'
 
 export interface DropdownProps extends TooltipProps {
   menuOptions: MenuOption[]
+  afterClickItem?: boolean
 }
 
 export interface MenuOption {
@@ -13,7 +14,7 @@ export interface MenuOption {
 }
 
 export interface DropdownEmits {
-  (e: 'visable-change', value: boolean): void
+  (e: 'visible-change', value: boolean): void
   (e: 'select', value: MenuOption): void
 }
 

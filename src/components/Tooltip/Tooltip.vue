@@ -22,20 +22,20 @@ let popperInstance: null | Instance = null
 const emits = defineEmits<TooltipEmits>()
 
 
-let counter = 0
+// let counter = 0
 // 打开提示框
 const tooltipOpen = () => {
-    counter++
-    console.log('open', counter)
+    // counter++
+    // console.log('open', counter)
     isOpen.value = true
-    emits('visable-change', true)
+    emits('visible-change', true)
 }
 // 关闭提示框
 const tooltipClose = () => {
-    counter++
-    console.log('close', counter)
+    // counter++
+    // console.log('close', counter)
     isOpen.value = false
-    emits('visable-change', false)
+    emits('visible-change', false)
 }
 
 // 防抖
