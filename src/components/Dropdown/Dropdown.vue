@@ -42,13 +42,16 @@ defineExpose<DropdownInstance>({
             <template #content>
                 <ul class="yv-dropdown__menu">
                     <template v-for="item in menuOptions" :key="item.key">
-                        <li v-if="item.divided" role="separator" class="divided-placeholder"></li>
+                        <!-- 分割线 -->
+                        <hr v-if="item.divided" role="separator" class="divided-placeholder">
+
                         <li class="yv-dropdown__item" @click="itemClick(item)" :class="{ 'is-disabled': item.disabled, 'is-divided': item.divided }
 
                             " :id="`dropdown-item-${item.key}`">
                             <!-- 中介组件 -->
                             <RenderVnode :v-node="item.label" />
                         </li>
+
                     </template>
                 </ul>
             </template>

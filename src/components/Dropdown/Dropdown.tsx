@@ -66,7 +66,7 @@ export default defineComponent({
             return (
             <Fragment key={item.key}>
 
-                { item.divided ? <li role="separator" class="divided-placeholder"/> : '' }
+                { item.divided ? <hr role="separator" class="divided-placeholder" /> : '' }
                 {
                 
                 <li class={{"yv-dropdown__item":true,'is-disabled':item.disabled,'is-divided':item.divided}} 
