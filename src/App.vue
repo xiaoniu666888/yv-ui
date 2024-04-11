@@ -5,8 +5,8 @@ import Collapse from './components/Collapse/Collapse.vue';
 import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
 import Tooltip from './components/Tooltip/Tooltip.vue';
-import Dropdown from './components/Dropdown/Dropdown';
-
+import Dropdown from './components/Dropdown/Dropdown.vue';
+import Message from './components/Message/Message.vue';
 import type { ButtonInstance } from './components/Button/types';
 import type { TooltipInstance } from './components/Tooltip/types';
 import type { Options } from '@popperjs/core';
@@ -57,6 +57,7 @@ const handleClickVisible = (e: any) => {
 </script>
 
 <template>
+  <Message message="Hello Message" :duration="0" show-close />
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
     <div class="wrapper">
@@ -72,7 +73,6 @@ const handleClickVisible = (e: any) => {
         <Button type="danger">danger</Button>
         <Button type="warning">warning</Button>
         <Button type="info">info</Button>
-
       </div>
       <hr>
       <div class="button">
