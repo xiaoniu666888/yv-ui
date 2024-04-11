@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import RenderVnode from '@/common/RenderVnode';
-import { ref, onMounted } from 'vue';
-import type { MessageProps } from './types';
-import Icon from '../Icon/Icon.vue';
+import RenderVnode from '@/common/RenderVnode'
+import { ref, onMounted, watch } from 'vue'
+import { getLastInstance } from './create'
+import Icon from '../Icon/Icon.vue'
+
+import type { MessageProps } from './types'
+
 const props = defineProps<MessageProps>()
 const visible = ref<boolean>(false)
-
+const instance = getLastInstance()
+console.log("instance=>", instance)
 function startTimer() {
     if (props.duration === 0) return
 
@@ -19,6 +23,11 @@ const handleClose = () => {
 onMounted(() => {
     visible.value = true
     startTimer()
+})
+watch(visible, (newVal) => {
+    if (!newVal) {
+        props.useDestory()
+    }
 })
 </script>
 

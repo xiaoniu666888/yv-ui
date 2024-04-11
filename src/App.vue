@@ -6,7 +6,9 @@ import CollapseItem from './components/Collapse/CollapseItem.vue';
 import Icon from './components/Icon/Icon.vue';
 import Tooltip from './components/Tooltip/Tooltip.vue';
 import Dropdown from './components/Dropdown/Dropdown.vue';
-import Message from './components/Message/Message.vue';
+// import Message from './components/Message/Message.vue';
+import { YvMessage } from './components/Message/create'
+
 import type { ButtonInstance } from './components/Button/types';
 import type { TooltipInstance } from './components/Tooltip/types';
 import type { Options } from '@popperjs/core';
@@ -24,6 +26,25 @@ onMounted(() => {
     openValue.value.push('b')
     // trigger.value = 'click'
   }, 2000);
+  YvMessage({
+    type: 'info',
+    message: 'createMessage1',
+    duration: 0,
+    showClose: true
+  })
+  YvMessage({
+    type: 'info',
+    message: 'createMessage2',
+    duration: 0,
+    showClose: true
+  })
+  YvMessage({
+    type: 'info',
+    message: 'createMessage3',
+    duration: 0,
+    showClose: true
+  })
+
 })
 const handleClick = () => {
   console.log("button")
@@ -48,16 +69,27 @@ const optionsDrown: MenuOption[] = [
   { key: 4, label: 'item4' }
 ]
 
+
 const handleClickDrop = (e: any) => {
   console.log('handleClickDrop=>', e)
 }
 const handleClickVisible = (e: any) => {
   console.log("handleClickVisible=>", e)
 }
+const createMessage = () => {
+  // console.log('666')
+  // YvMessage({
+  //   type: 'info',
+  //   message: 'createMessage',
+  //   duration: 0,
+  //   showClose: true
+  // })
+}
+
 </script>
 
 <template>
-  <Message message="Hello Message" :duration="0" show-close />
+  <!-- <Message message="Hello Message" :duration="0" show-close /> -->
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
     <div class="wrapper">
@@ -150,6 +182,7 @@ const handleClickVisible = (e: any) => {
       Tooltip
     </Dropdown>
     <hr>
+    <Button @click="createMessage">createMessage</Button>
 
   </main>
 </template>

@@ -5,4 +5,13 @@ export interface MessageProps {
   icon?: string
   duration?: number
   showClose?: boolean
+  useDestory: () => void
 }
+
+export interface MesssageContext {
+  id: string
+  vnode: VNode
+  props: MessageProps
+}
+
+export type CreateMessageProps = Omit<MessageProps, 'useDestory'>
