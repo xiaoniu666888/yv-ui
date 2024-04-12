@@ -25,7 +25,7 @@ onMounted(() => {
   setTimeout(() => {
     openValue.value.push('b')
     // trigger.value = 'click'
-    intance.destory()
+    intance.destroy()
   }, 2000);
   YvMessage({
     type: 'info',
@@ -34,13 +34,19 @@ onMounted(() => {
     showClose: true
   })
   YvMessage({
-    type: 'info',
+    type: 'danger',
+    message: 'createMessage2',
+    duration: 2000,
+    showClose: true
+  })
+  YvMessage({
+    type: 'warning',
     message: 'createMessage2',
     duration: 2000,
     showClose: true
   })
   const intance = YvMessage({
-    type: 'info',
+    type: 'success',
     message: 'createMessage3',
     duration: 0,
     showClose: true

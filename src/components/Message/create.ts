@@ -13,7 +13,7 @@ export function YvMessage(props: CreateMessageProps) {
   const id = `message_${seed++}`
   const container = document.createElement('div')
   // 卸载组件
-  const destoryMesssage = () => {
+  const destroyMesssage = () => {
     // 从实例数组中删除
     const index = instances.findIndex((instance) => instance.id === id)
     if (index === -1) return
@@ -33,7 +33,7 @@ export function YvMessage(props: CreateMessageProps) {
     ...props,
     id,
     zIndex: nextZIndex(),
-    useDestory: destoryMesssage
+    useDestroy: destroyMesssage
   }
   const vnode = h(Message, newProps)
   //   console.log('vnode', vnode)
@@ -47,7 +47,7 @@ export function YvMessage(props: CreateMessageProps) {
     vnode,
     props: newProps,
     vm,
-    destory: manualDistory
+    destroy: manualDistory
   }
   instances.push(instance)
 
@@ -61,7 +61,7 @@ export const getLastInstance = () => {
 // 获取上一个实例的offset
 export const getLastBottomOffset = (id: string) => {
   const index = instances.findIndex((instance) => instance.id === id)
-  console.log('index', id, index, instances.length)
+  // console.log('index', id, index, instances.length)
   // 如果 index <= 0 说明是第一项
   if (index <= 0) {
     return 0

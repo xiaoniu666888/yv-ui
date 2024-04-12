@@ -8,8 +8,9 @@ export interface MessageProps {
   offset?: number
   // 添加z-index
   zIndex: number
-  useDestory: () => void
+  useDestroy: () => void
   id: string
+  transitionName?: string
 }
 
 export interface MesssageContext {
@@ -17,10 +18,10 @@ export interface MesssageContext {
   vnode: VNode
   props: MessageProps
   vm: ComponentInternalInstance
-  destory: () => void
+  destroy: () => void
 }
 
 export type CreateMessageProps = Omit<
   MessageProps,
-  'useDestory' | 'id' | 'zIndex'
+  'useDestroy' | 'id' | 'zIndex'
 >
