@@ -1,5 +1,6 @@
 import { render, h, shallowReactive } from 'vue'
 import Message from './Message.vue'
+import useZIndex from '@/hooks/messageZIndex'
 
 import type { CreateMessageProps, MesssageContext } from './types'
 
@@ -8,6 +9,7 @@ let seed = 1
 const instances: MesssageContext[] = shallowReactive([])
 
 export function YvMessage(props: CreateMessageProps) {
+  const { nextZIndex } = useZIndex()
   const id = `message_${seed++}`
   const container = document.createElement('div')
   // 卸载组件
@@ -18,9 +20,19 @@ export function YvMessage(props: CreateMessageProps) {
     instances.splice(index, 1)
     render(null, container)
   }
+
+  //  手动调用删除, 也就是手动调整组件中的visible值
+  //  visible 是通过expose传出来的
+  const manualDistory = () => {
+    const instance = instances.find((instance) => instance.id === id)
+    if (instance) {
+      instance.vm.exposed!.visible.value = false
+    }
+  }
   const newProps = {
     ...props,
     id,
+    zIndex: nextZIndex(),
     useDestory: destoryMesssage
   }
   const vnode = h(Message, newProps)
@@ -34,7 +46,8 @@ export function YvMessage(props: CreateMessageProps) {
     id,
     vnode,
     props: newProps,
-    vm
+    vm,
+    destory: manualDistory
   }
   instances.push(instance)
 

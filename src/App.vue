@@ -25,6 +25,7 @@ onMounted(() => {
   setTimeout(() => {
     openValue.value.push('b')
     // trigger.value = 'click'
+    intance.destory()
   }, 2000);
   YvMessage({
     type: 'info',
@@ -38,7 +39,7 @@ onMounted(() => {
     duration: 0,
     showClose: true
   })
-  YvMessage({
+  const intance = YvMessage({
     type: 'info',
     message: 'createMessage3',
     duration: 0,

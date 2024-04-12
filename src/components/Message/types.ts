@@ -6,6 +6,8 @@ export interface MessageProps {
   duration?: number
   showClose?: boolean
   offset?: number
+  // 添加z-index
+  zIndex: number
   useDestory: () => void
   id: string
 }
@@ -15,6 +17,10 @@ export interface MesssageContext {
   vnode: VNode
   props: MessageProps
   vm: ComponentInternalInstance
+  destory: () => void
 }
 
-export type CreateMessageProps = Omit<MessageProps, 'useDestory' | 'id'>
+export type CreateMessageProps = Omit<
+  MessageProps,
+  'useDestory' | 'id' | 'zIndex'
+>
