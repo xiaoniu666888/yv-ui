@@ -25,7 +25,9 @@ const lastOffset = computed(() => getLastBottomOffset(props.id))
 const topOffset = computed(() => props.offset + lastOffset.value)
 // 该元素为下一个元素预留的offset, 也就是它最低端bottom的值
 const bottomOffset = computed(() => height.value + topOffset.value)
-
+const cssStyle = computed(() => ({
+    top: topOffset.value + 'px',
+}))
 function startTimer() {
     if (props.duration === 0) return
 
@@ -48,7 +50,8 @@ watch(visible, (newVal) => {
     }
 })
 defineExpose({
-    bottomOffset
+    bottomOffset,
+    visible
 })
 </script>
 
@@ -57,7 +60,7 @@ defineExpose({
     <div class="yv-message" v-show="visible" role="alert" :class="{
         [`vk-message--${type}`]: type,
         'is-close': props.showClose
-    }" ref="messageRef">
+    }" ref="messageRef" :style="cssStyle">
         <div class="yv-message__content">
             <slot>
                 {{ offset }} - {{ topOffset }} - {{ height }} - {{ bottomOffset }}
