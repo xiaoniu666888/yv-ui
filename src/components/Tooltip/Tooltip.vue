@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, reactive, onMounted, computed } from 'vue';
 import { createPopper } from '@popperjs/core'
-import useCilckOutside from '@/hooks/utilTooltip'
+import useCilckOutside from '@/hooks/useUtilTooltip'
 import { debounce } from 'lodash-es';
 import type { TooltipProps, TooltipEmits, TooltipInstance } from './types'
 import type { Instance } from '@popperjs/core'

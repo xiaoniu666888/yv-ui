@@ -3,8 +3,10 @@ import RenderVnode from '@/common/RenderVnode'
 import { ref, onMounted, watch, computed, nextTick } from 'vue';
 import { getLastBottomOffset } from './create'
 import Icon from '../Icon/Icon.vue'
+import useEventListener from '../../hooks/useEventListener';
 
 import type { MessageProps } from './types'
+
 // const instance = getCurrentInstance()
 // console.log(instance)
 const props = withDefaults(defineProps<MessageProps>(), {
@@ -29,12 +31,21 @@ const cssStyle = computed(() => ({
     top: topOffset.value + 'px',
     zIndex: props.zIndex
 }))
-function startTimer() {
+let timer: any;
+const startTimer = () => {
     if (props.duration === 0) return
 
-    setTimeout(() => {
+    timer = setTimeout(() => {
         visible.value = false
     }, props.duration)
+    console.log("mouseleave")
+}
+
+const clearTimer = () => {
+    console.log('mouseenter')
+    clearTimeout(timer)
+    console.log(timer)
+
 }
 const handleClose = () => {
     visible.value = false
@@ -45,6 +56,13 @@ onMounted(async () => {
     await nextTick()
     height.value = messageRef.value!.getBoundingClientRect().height
 })
+function keydown(e: Event) {
+    const event = e as KeyboardEvent
+    if (event.code === 'Escape') {
+        visible.value = false
+    }
+}
+useEventListener(document, 'keydown', keydown)
 watch(visible, (newVal) => {
     if (!newVal) {
         props.useDestory()
@@ -60,7 +78,7 @@ defineExpose({
     <div class="yv-message" v-show="visible" role="alert" :class="{
         [`vk-message--${type}`]: type,
         'is-close': props.showClose
-    }" ref="messageRef" :style="cssStyle">
+    }" ref="messageRef" :style="cssStyle" @mouseenter="clearTimer" @mouseleave="startTimer">
         <div class="yv-message__content">
             <slot>
                 {{ offset }} - {{ topOffset }} - {{ height }} - {{ bottomOffset }}

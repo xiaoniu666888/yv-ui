@@ -36,7 +36,7 @@ onMounted(() => {
   YvMessage({
     type: 'info',
     message: 'createMessage2',
-    duration: 0,
+    duration: 2000,
     showClose: true
   })
   const intance = YvMessage({
