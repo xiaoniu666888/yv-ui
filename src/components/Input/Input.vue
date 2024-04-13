@@ -1,38 +1,74 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, useAttrs, nextTick } from 'vue';
 import Icon from '../Icon/Icon.vue'
 import type { InputProps, InputEmits } from './types'
+import type { Ref } from 'vue';
 
 defineOptions({
-    name: 'YvInput'
+    name: 'YvInput',
+    inheritAttrs: false
 })
 const props = withDefaults(defineProps<InputProps>(), { type: 'text' })
 const emits = defineEmits<InputEmits>()
+const attrs = useAttrs()
 const innerValue = ref(props.modelValue)
 const isFocus = ref(false)
+const passwordVisible = ref(false)
+const inputRef = ref() as Ref<HTMLInputElement>
 
+
+// 展示清除图标
 const showClear = computed(() => props.clearable && !props.disabled && !!innerValue.value && isFocus.value)
+// 当输入框为密码框时
+const showPasswordArea = computed(() => props.showPassword && !props.disabled && !!innerValue.value)
+
+const togglePasswordVislble = () => {
+    passwordVisible.value = !passwordVisible.value
+}
+const NOOP = () => { }
+
+const keepFocus = async () => {
+    await nextTick()
+    inputRef.value.focus()
+}
 
 const handleInput = () => {
+    console.log('input')
     emits('update:modelValue', innerValue.value)
+    emits('input', innerValue.value)
 }
-const handleFocus = () => {
+
+const handleChange = () => {
+    console.log('change')
+    emits('change', innerValue.value)
+}
+
+const handleFocus = (event: FocusEvent) => {
     isFocus.value = true
-    // console.log(innerValue.value)
+    emits('focus', event)
+    console.log('focus')
 }
-const handleBlur = () => {
+const handleBlur = (event: FocusEvent) => {
     isFocus.value = false
-    // console.log(innerValue.value)
+    emits('blur', event)
+    console.log('blur')
 }
 const clearValue = () => {
     innerValue.value = ''
-    console.log(111)
+    console.log('clear')
     emits('update:modelValue', '')
+    emits('clear')
+    emits('input', '')
+    emits('change', '')
 }
+
+
 watch(() => props.modelValue, (newVal) => {
     innerValue.value = newVal
 })
-
+defineExpose({
+    ref: inputRef
+})
 
 </script>
 
@@ -55,23 +91,31 @@ watch(() => props.modelValue, (newVal) => {
             <div v-if="$slots.prepend" class="yv-input__prepend">
                 <slot name="prepend"></slot>
             </div>
-            <!-- 输入框头部内容，只对非 type="textarea" 有效 -->
+            <!-- 输入框 -->
             <div class="yv-input__wrapper">
+                <!-- 输入框头部内容，只对非 type="textarea" 有效 -->
                 <span v-if="$slots.prefix" class="yv-input__prefix">
                     <slot name="prefix"></slot>
                 </span>
-            </div>
 
-            <input class="yv-input__inner" :type="props.type" :disabled="props.disabled" v-model="innerValue"
-                @input="handleInput" @focus="handleFocus" @blur="handleBlur" />
+                <input ref="inputRef" v-bind="attrs" class="yv-input__inner"
+                    :type="showPassword ? (passwordVisible ? 'text' : 'password') : type" :disabled="disabled"
+                    :readonly="readonly" :autocomplete="autocomplete" :placeholder="placeholder" :autofocus="autofocus"
+                    :form="form" v-model="innerValue" @input="handleInput" @change="handleChange" @focus="handleFocus"
+                    @blur="handleBlur" />
 
-            <!-- 输入框尾部内容，只对非 type="textarea" 有效 -->
-            <div class="yv-input__wrapper">
-                <span v-if="$slots.suffix || showClear" class="yv-input__suffix">
+                <!-- 输入框尾部内容，只对非 type="textarea" 有效 -->
+                <span v-if="$slots.suffix || showClear || showPasswordArea" class="yv-input__suffix" @click="keepFocus">
                     <slot name="suffix"></slot>
 
-                    <Icon @click="clearValue" v-if="showClear" icon="circle-xmark" class="yv-input__clear" />
+                    <Icon @click="clearValue" v-if="showClear" icon="circle-xmark" class="yv-input__clear"
+                        @mousedown.prevent="NOOP" />
 
+                    <Icon v-if="showPasswordArea && passwordVisible" icon="eye" @click="togglePasswordVislble"
+                        class="yv-input__clear" />
+
+                    <Icon v-if="showPasswordArea && !passwordVisible" icon="eye-slash" @click="togglePasswordVislble"
+                        class="yv-input__clear" />
                 </span>
             </div>
             <!-- 输入框后置内容，只对非 type="textarea" 有效 -->
@@ -82,8 +126,10 @@ watch(() => props.modelValue, (newVal) => {
 
         <!-- textarea形式 -->
         <template>
-            <textarea class="yv-textarea__wrapper" :disabled="props.disabled" v-model="innerValue" @input="handleInput"
-                @focus="handleFocus" @blur="handleBlur"></textarea>
+            <textarea ref="inputRef" v-bind="attrs" class="yv-textarea__wrapper" :disabled="disabled"
+                :readonly="readonly" :autocomplete="autocomplete" :placeholder="placeholder" :autofocus="autofocus"
+                :form="form" v-model="innerValue" @input="handleInput" @change="handleChange" @focus="handleFocus"
+                @blur="handleBlur" />
         </template>
 
     </div>

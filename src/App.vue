@@ -195,8 +195,9 @@ const inputModel = ref('')
     <Button @click="createMessage">createMessage</Button>
     <hr>
     <hr>
-    <Input type="text" clearable v-model="inputModel" />
-    <!-- {{ inputModel }} -->
+    <Input type="password" show-password v-model="inputModel" />
+    {{ inputModel }}
+    <!-- <Input type="text" clearable v-model="inputModel" placeholder="输入字符以后可以点击清空" /> -->
   </main>
 </template>
 
