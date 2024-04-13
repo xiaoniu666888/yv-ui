@@ -8,6 +8,7 @@ import Tooltip from './components/Tooltip/Tooltip.vue';
 import Dropdown from './components/Dropdown/Dropdown.vue';
 // import Message from './components/Message/Message.vue';
 import { YvMessage } from './components/Message/create'
+import Input from './components/Input/Input.vue';
 
 import type { ButtonInstance } from './components/Button/types';
 import type { TooltipInstance } from './components/Tooltip/types';
@@ -92,7 +93,7 @@ const createMessage = () => {
   //   showClose: true
   // })
 }
-
+const inputModel = ref('')
 </script>
 
 <template>
@@ -170,12 +171,14 @@ const createMessage = () => {
       Tooltip
     </Tooltip>
     <hr>
+
     <h1>手动处理</h1>
     <Tooltip ref="toolTipRef" content="Tooltip" placement="top" :trigger="trigger" manual :popper-options="options">
       Tooltip
     </Tooltip>
 
     <hr>
+
     <Button size="small" @click="handleClickOpen()">open Tooltip</Button>
     <Button size="small" @click="handleClickClose()">close Tooltip</Button>
 
@@ -190,7 +193,10 @@ const createMessage = () => {
     </Dropdown>
     <hr>
     <Button @click="createMessage">createMessage</Button>
-
+    <hr>
+    <hr>
+    <Input type="text" clearable v-model="inputModel" />
+    <!-- {{ inputModel }} -->
   </main>
 </template>
 
