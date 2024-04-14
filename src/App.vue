@@ -96,7 +96,9 @@ const createMessage = () => {
 }
 const inputModel = ref('')
 
-const switchValue = ref(false)
+const switchValue = ref('')
+
+
 </script>
 
 <template>
@@ -204,7 +206,13 @@ const switchValue = ref(false)
 
     <hr>
 
-    <Switch v-model="switchValue"></Switch>
+    <Switch v-model="switchValue" active-value="ture" inactive-value="false">
+    </Switch>---
+    <span>{{ switchValue }}</span>
+    <hr>
+    <Switch v-model="switchValue" size="large" active-text="on" inactive-text="off">
+    </Switch>
+
   </main>
 </template>
 
