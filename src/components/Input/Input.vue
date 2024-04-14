@@ -8,7 +8,7 @@ defineOptions({
     name: 'YvInput',
     inheritAttrs: false
 })
-const props = withDefaults(defineProps<InputProps>(), { type: 'text' })
+const props = withDefaults(defineProps<InputProps>(), { type: 'text', autocomplete: 'off' })
 const emits = defineEmits<InputEmits>()
 const attrs = useAttrs()
 const innerValue = ref(props.modelValue)
@@ -24,8 +24,6 @@ const showPasswordArea = computed(() => props.showPassword && !props.disabled &&
 
 const togglePasswordVislble = () => {
     passwordVisible.value = !passwordVisible.value
-
-
 }
 const NOOP = () => { }
 
@@ -48,7 +46,7 @@ const handleChange = () => {
 const handleFocus = (event: FocusEvent) => {
     isFocus.value = true
     emits('focus', event)
-    console.log('focus')
+    // console.log('focus')
 }
 const handleBlur = (event: FocusEvent) => {
     isFocus.value = false
@@ -114,10 +112,10 @@ defineExpose({
                         @mousedown.prevent="NOOP" />
 
                     <Icon v-if="showPasswordArea && passwordVisible" icon="eye" @click="togglePasswordVislble"
-                        class="yv-input__clear" />
+                        class="yv-input__password" />
 
                     <Icon v-if="showPasswordArea && !passwordVisible" icon="eye-slash" @click="togglePasswordVislble"
-                        class="yv-input__clear" />
+                        class="yv-input__password" />
                 </span>
             </div>
             <!-- 输入框后置内容，只对非 type="textarea" 有效 -->

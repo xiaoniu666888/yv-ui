@@ -221,7 +221,8 @@ const selectTest = ref('0')
     <Switch v-model="switchValue" size="large" active-text="on" inactive-text="off">
     </Switch>
     <hr>
-    <Select v-model="selectTest" :options="selectOptions" placeholder="请选择"></Select>
+    <Select v-model="selectTest" :options="selectOptions" clearable placeholder="请选择"></Select>
+    {{ selectTest }}
   </main>
 </template>
 
