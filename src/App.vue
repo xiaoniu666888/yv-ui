@@ -9,6 +9,9 @@ import Dropdown from './components/Dropdown/Dropdown.vue';
 // import Message from './components/Message/Message.vue';
 import { YvMessage } from './components/Message/create'
 import Input from './components/Input/Input.vue';
+import Select from './components/Select/Select.vue';
+
+
 
 import type { ButtonInstance } from './components/Button/types';
 import type { TooltipInstance } from './components/Tooltip/types';
@@ -97,8 +100,13 @@ const createMessage = () => {
 const inputModel = ref('')
 
 const switchValue = ref('')
-
-
+const selectOptions = [
+  { label: 'hello', value: '1' },
+  { label: 'xyz', value: '2' },
+  { label: 'testing', value: '3' },
+  { label: 'check', value: '4', disabled: true }
+]
+const selectTest = ref('0')
 </script>
 
 <template>
@@ -212,7 +220,8 @@ const switchValue = ref('')
     <hr>
     <Switch v-model="switchValue" size="large" active-text="on" inactive-text="off">
     </Switch>
-
+    <hr>
+    <Select v-model="selectTest" :options="selectOptions" placeholder="请选择"></Select>
   </main>
 </template>
 
