@@ -7,7 +7,7 @@ import Input from '../Input/Input.vue';
 import type { SelectsProps, SelectEmits, SelectOption, SelectState } from './types'
 import type { TooltipInstance } from '../Tooltip/types';
 import type { Ref } from 'vue';
-
+import type { InputInstance } from '../Input/types'
 
 const findOption = (value: string) => {
     const option = props.options.find(option => option.value === value)
@@ -16,6 +16,14 @@ const findOption = (value: string) => {
 const props = defineProps<SelectsProps>()
 const emits = defineEmits<SelectEmits>()
 const initialOption = findOption(props.modelValue)
+const tooltipRef = ref() as Ref<TooltipInstance>
+const inputRef = ref() as Ref<InputInstance>
+const selectState = reactive<SelectState>({
+    inputValue: initialOption ? initialOption.label : '',
+    selectedOption: initialOption
+})
+const isDropdownShow = ref(false)
+
 // 使选项宽度和选择框宽度相同
 const popperOptions: any = {
     modifiers: [
@@ -36,15 +44,6 @@ const popperOptions: any = {
         }
     ],
 }
-
-
-const selectState = reactive<SelectState>({
-    inputValue: initialOption ? initialOption.label : '',
-    selectedOption: initialOption
-})
-const tooltipRef = ref() as Ref<TooltipInstance>
-
-const isDropdownShow = ref<boolean>(false)
 // 处理打开关闭
 const controlDropdown = (show: boolean) => {
     if (show) {
@@ -66,13 +65,15 @@ const toggleDropdown = () => {
 }
 
 // 处理点击某个选择项
-const optionSelect = (e: SelectOption) => {
+const optionSelect = async (e: SelectOption) => {
     if (e.disabled) return
     selectState.inputValue = e.label
     selectState.selectedOption = e
-    controlDropdown(false)
     emits('change', e.value)
     emits('update:modelValue', e.value)
+    controlDropdown(false)
+
+    inputRef.value.ref.focus()
 }
 </script>
 
@@ -82,8 +83,11 @@ const optionSelect = (e: SelectOption) => {
         'is-disabled': disabled
 
     }" @click="toggleDropdown">
-        <Tooltip ref="tooltipRef" placement="bottom-start" manual :popper-options="popperOptions">
-            <Input type="text" v-model="selectState.inputValue" :disabled="disabled" :placeholder="placeholder" />
+
+        <Tooltip ref="tooltipRef" placement="bottom-start" manual :popper-options="popperOptions"
+            @click-outside="controlDropdown(false)">
+
+            <Input ref="inputRef" v-model="selectState.inputValue" :disabled="disabled" :placeholder="placeholder" />
             <template #content>
                 <ul class="yv-select__menu">
                     <template v-for="(item, index) in options" :key="index">

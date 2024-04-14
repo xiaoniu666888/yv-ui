@@ -24,6 +24,8 @@ const showPasswordArea = computed(() => props.showPassword && !props.disabled &&
 
 const togglePasswordVislble = () => {
     passwordVisible.value = !passwordVisible.value
+
+
 }
 const NOOP = () => { }
 
@@ -46,7 +48,7 @@ const handleChange = () => {
 const handleFocus = (event: FocusEvent) => {
     isFocus.value = true
     emits('focus', event)
-    // console.log('focus')
+    console.log('focus')
 }
 const handleBlur = (event: FocusEvent) => {
     isFocus.value = false
