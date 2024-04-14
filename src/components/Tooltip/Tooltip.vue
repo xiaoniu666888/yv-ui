@@ -120,6 +120,9 @@ useCilckOutside(popperContainNode, () => {
     if (props.trigger && isOpen.value && !props.manual) {
         close()
     }
+    if (isOpen.value) {
+        emits('click-outside', true)
+    }
 })
 onMounted(() => {
     popperInstance?.destroy()

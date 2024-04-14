@@ -19,6 +19,7 @@ export interface TooltipProps {
 
 export interface TooltipEmits {
   (e: 'visible-change', value: boolean): void
+  (e: 'click-outside', value: boolean): void
 }
 
 // 让用户可以手动打开或关闭弹框
