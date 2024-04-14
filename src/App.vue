@@ -14,6 +14,7 @@ import type { ButtonInstance } from './components/Button/types';
 import type { TooltipInstance } from './components/Tooltip/types';
 import type { Options } from '@popperjs/core';
 import type { MenuOption } from './components/Dropdown/types';
+import Switch from './components/Switch/Switch.vue';
 const buttonRef = ref<ButtonInstance | null>(null)
 const toolTipRef = ref<TooltipInstance | null>(null)
 const DropdownRef = ref<TooltipInstance | null>(null)
@@ -94,6 +95,8 @@ const createMessage = () => {
   // })
 }
 const inputModel = ref('')
+
+const switchValue = ref(false)
 </script>
 
 <template>
@@ -198,6 +201,10 @@ const inputModel = ref('')
     <Input type="password" show-password v-model="inputModel" />
     {{ inputModel }}
     <!-- <Input type="text" clearable v-model="inputModel" placeholder="输入字符以后可以点击清空" /> -->
+
+    <hr>
+
+    <Switch v-model="switchValue"></Switch>
   </main>
 </template>
 

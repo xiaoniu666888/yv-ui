@@ -33,29 +33,29 @@ const keepFocus = async () => {
 }
 
 const handleInput = () => {
-    console.log('input')
+    // console.log('input')
     emits('update:modelValue', innerValue.value)
     emits('input', innerValue.value)
 }
 
 const handleChange = () => {
-    console.log('change')
+    // console.log('change')
     emits('change', innerValue.value)
 }
 
 const handleFocus = (event: FocusEvent) => {
     isFocus.value = true
     emits('focus', event)
-    console.log('focus')
+    // console.log('focus')
 }
 const handleBlur = (event: FocusEvent) => {
     isFocus.value = false
     emits('blur', event)
-    console.log('blur')
+    // console.log('blur')
 }
 const clearValue = () => {
     innerValue.value = ''
-    console.log('clear')
+    // console.log('clear')
     emits('update:modelValue', '')
     emits('clear')
     emits('input', '')
