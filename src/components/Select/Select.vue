@@ -15,7 +15,9 @@ const findOption = (value: string) => {
     const option = props.options.find(option => option.value === value)
     return option ? option : null
 }
-const props = defineProps<SelectsProps>()
+const props = withDefaults(defineProps<SelectsProps>(), {
+    options: () => []
+})
 const emits = defineEmits<SelectEmits>()
 const initialOption = findOption(props.modelValue)
 const tooltipRef = ref() as Ref<TooltipInstance>
@@ -23,7 +25,8 @@ const inputRef = ref() as Ref<InputInstance>
 const selectState = reactive<SelectState>({
     inputValue: initialOption ? initialOption.label : '',
     selectedOption: initialOption,
-    mouseHover: false
+    mouseHover: false,
+    loading: false
 })
 const isDropdownShow = ref(false)
 
@@ -70,10 +73,24 @@ watch(() => props.options, (newVal) => {
     filteredOptions.value = newVal
 })
 // 定义用于筛选的函数
-const generateFilterOptions = (searchValue: string) => {
+const generateFilterOptions = async (searchValue: string) => {
     if (!props.filterable) return
+
     if (props.filterMethod && isFunction(props.filterMethod)) {
         filteredOptions.value = props.filterMethod(searchValue)
+    } else if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
+        selectState.loading = true
+        try {
+            filteredOptions.value = await props.remoteMethod(searchValue)
+            // 当远程搜索模式的时候需要手动完成展示
+            // 注意要在结果生成以后再展示，否则生成的下拉菜单上面箭头图标位置不对
+            // if(remote)
+        } catch (error) {
+            console.error(error)
+            filteredOptions.value = []
+        } finally {
+            selectState.loading = false
+        }
     } else {
         filteredOptions.value = props.options.filter(option => option.label.includes(searchValue))
     }
@@ -158,7 +175,15 @@ const optionSelect = async (e: SelectOption) => {
             </template>
             </Input>
             <template #content>
-                <ul class="yv-select__menu">
+                <!-- 等待数据加载中展示 -->
+                <div class="yv-select__loading" v-if="selectState.loading">
+                    <Icon icon="spinner" spin></Icon>
+                </div>
+                <!-- 筛选之后无数据 -->
+                <div class="yv-select__loading" v-else-if="filterable && filteredOptions.length === 0">
+                    no Data
+                </div>
+                <ul v-else class="yv-select__menu">
                     <template v-for="(item, index) in filteredOptions" :key="index">
                         <li class="yv-select__menu-item" :class="{
                             'is-disabled': item.disabled,
