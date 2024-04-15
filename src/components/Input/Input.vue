@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, computed, useAttrs, nextTick } from 'vue';
+import { ref, watch, computed, useAttrs, nextTick, inject } from 'vue';
 import Icon from '../Icon/Icon.vue'
+import { formItemContextKey } from '../Form/types';
 import type { InputProps, InputEmits } from './types'
 import type { Ref } from 'vue';
 
@@ -10,6 +11,10 @@ defineOptions({
 })
 const props = withDefaults(defineProps<InputProps>(), { type: 'text', autocomplete: 'off' })
 const emits = defineEmits<InputEmits>()
+const formItemContext = formItemContextKey && inject(formItemContextKey) || null
+const handleValidate = () => {
+    formItemContext && formItemContext?.validate()
+}
 const attrs = useAttrs()
 const innerValue = ref(props.modelValue)
 const isFocus = ref(false)
@@ -51,6 +56,7 @@ const handleFocus = (event: FocusEvent) => {
 const handleBlur = (event: FocusEvent) => {
     isFocus.value = false
     emits('blur', event)
+    handleValidate()
     // console.log('blur')
 }
 const clearValue = () => {
