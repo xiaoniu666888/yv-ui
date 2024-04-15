@@ -3,6 +3,7 @@ import { ref, reactive, computed, nextTick } from 'vue';
 import Tooltip from '../Tooltip/Tooltip.vue';
 import Input from '../Input/Input.vue';
 import Icon from '../Icon/Icon.vue';
+import RenderVnode from '@/common/RenderVnode';
 
 import type { SelectsProps, SelectEmits, SelectOption, SelectState } from './types'
 import type { TooltipInstance } from '../Tooltip/types';
@@ -128,7 +129,7 @@ const optionSelect = async (e: SelectOption) => {
                             'is-selected': selectState.selectedOption?.value === item.value
                         }" :id="`select-item-${item.value}`" @click.stop="optionSelect(item)"
                             @mousedown.prevent="NOOP">
-                            {{ item.label }}
+                            <RenderVnode :v-node="renderLabel ? renderLabel(item) : item.label" />
                         </li>
                     </template>
                 </ul>

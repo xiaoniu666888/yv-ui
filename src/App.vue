@@ -107,6 +107,11 @@ const selectOptions = [
   { label: 'check', value: '4', disabled: true }
 ]
 const selectTest = ref('0')
+
+
+const customRender = (option: any) => {
+  return h('div', { className: 'xyz' }, [h('b', option.label), h('span', option.value)])
+}
 </script>
 
 <template>
@@ -222,6 +227,13 @@ const selectTest = ref('0')
     </Switch>
     <hr>
     <Select v-model="selectTest" :options="selectOptions" clearable placeholder="请选择"></Select>
+    {{ selectTest }}
+
+
+    <hr>
+
+    <Select v-model="selectTest" :options="selectOptions" clearable placeholder="请选择"
+      :render-label="customRender"></Select>
     {{ selectTest }}
   </main>
 </template>

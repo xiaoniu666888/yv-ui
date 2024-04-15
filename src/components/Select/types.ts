@@ -1,3 +1,6 @@
+import type { VNode } from 'vue'
+export type RenderLabelFunc = (option: SelectOption) => VNode
+
 export interface SelectOption {
   label: string
   value: string
@@ -13,6 +16,7 @@ export interface SelectsProps {
   placeholder: string
   disabled?: boolean
   clearable?: boolean
+  renderLabel?: RenderLabelFunc
 }
 
 export interface SelectState {
