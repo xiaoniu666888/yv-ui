@@ -21,7 +21,10 @@ const props = withDefaults(defineProps<SelectsProps>(), {
 const emits = defineEmits<SelectEmits>()
 // 定义延时,用于防抖
 const timeout = computed(() => props.remote ? 300 : 0)
-const initialOption = findOption(props.modelValue)
+let initialOption = findOption(props.modelValue)
+watch(() => props.modelValue, (newVal) => {
+    initialOption = findOption(newVal)
+})
 const tooltipRef = ref() as Ref<TooltipInstance>
 const inputRef = ref() as Ref<InputInstance>
 const selectState = reactive<SelectState>({
