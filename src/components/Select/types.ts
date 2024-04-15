@@ -32,6 +32,8 @@ export interface SelectState {
   selectedOption: null | SelectOption
   mouseHover: boolean
   loading: boolean
+  // 用于按键盘上下键的时候高亮选项
+  highlightIndex: number
 }
 
 export interface SelectEmits {

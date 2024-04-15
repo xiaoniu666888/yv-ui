@@ -9,7 +9,7 @@ import type { SelectsProps, SelectEmits, SelectOption, SelectState } from './typ
 import type { TooltipInstance } from '../Tooltip/types';
 import type { Ref } from 'vue';
 import type { InputInstance } from '../Input/types'
-import { isFunction } from 'lodash-es';
+import { debounce, isFunction } from 'lodash-es';
 
 const findOption = (value: string) => {
     const option = props.options.find(option => option.value === value)
@@ -19,6 +19,8 @@ const props = withDefaults(defineProps<SelectsProps>(), {
     options: () => []
 })
 const emits = defineEmits<SelectEmits>()
+// 定义延时,用于防抖
+const timeout = computed(() => props.remote ? 300 : 0)
 const initialOption = findOption(props.modelValue)
 const tooltipRef = ref() as Ref<TooltipInstance>
 const inputRef = ref() as Ref<InputInstance>
@@ -26,7 +28,8 @@ const selectState = reactive<SelectState>({
     inputValue: initialOption ? initialOption.label : '',
     selectedOption: initialOption,
     mouseHover: false,
-    loading: false
+    loading: false,
+    highlightIndex: -1
 })
 const isDropdownShow = ref(false)
 
@@ -94,12 +97,17 @@ const generateFilterOptions = async (searchValue: string) => {
     } else {
         filteredOptions.value = props.options.filter(option => option.label.includes(searchValue))
     }
+    selectState.highlightIndex = -1
 }
 
 // 开始筛选，绑定到input事件
 const onFilter = () => {
     generateFilterOptions(selectState.inputValue)
 }
+// 将onFilter函数进行防抖处理
+const debounceOnFliter = debounce(() => {
+    onFilter()
+}, timeout.value)
 // 处理placeholder
 const filteredPlaceHolder = computed(() => {
     return (props.filterable && selectState.selectedOption && isDropdownShow.value) ? selectState.selectedOption.label : props.placeholder
@@ -121,11 +129,11 @@ const controlDropdown = (show: boolean) => {
         if (props.filterable) {
             selectState.inputValue = selectState.selectedOption ? selectState.selectedOption.label : ''
         }
+        selectState.highlightIndex = -1
     }
     isDropdownShow.value = show
     emits('visible-change', show)
 }
-
 const toggleDropdown = () => {
     if (props.disabled) return
     if (isDropdownShow.value) {
@@ -147,7 +155,50 @@ const optionSelect = async (e: SelectOption) => {
     await nextTick()
     inputRef.value.ref.focus()
 }
+// 添加键盘事件
+const handleKeyDown = (e: KeyboardEvent) => {
+    switch (e.key) {
+        case 'Enter':
+            if (!isDropdownShow.value) {
+                controlDropdown(true)
+            } else {
+                if (selectState.highlightIndex > -1 && filteredOptions.value[selectState.highlightIndex]) {
+                    optionSelect(filteredOptions.value[selectState.highlightIndex])
+                }
+            }
+            break;
+        case 'Escape':
+            if (isDropdownShow.value) {
+                controlDropdown(false)
 
+            }
+            break
+        case 'ArrowUp':
+            e.preventDefault()
+            if (filteredOptions.value.length > 0) {
+                // 找不到或第一项
+                if (selectState.highlightIndex === -1 || selectState.highlightIndex === 0) {
+                    selectState.highlightIndex = filteredOptions.value.length - 1
+                } else {
+                    selectState.highlightIndex--
+                }
+            }
+            break
+        case 'ArrowDown':
+            e.preventDefault()
+            if (filteredOptions.value.length > 0) {
+                // 找不到或最后一项
+                if (selectState.highlightIndex === -1 || selectState.highlightIndex === (filteredOptions.value.length - 1)) {
+                    selectState.highlightIndex = 0
+                } else {
+                    selectState.highlightIndex++
+                }
+            }
+            break
+        default:
+            break;
+    }
+}
 </script>
 
 
@@ -162,7 +213,8 @@ const optionSelect = async (e: SelectOption) => {
             @click-outside="controlDropdown(false)">
 
             <Input ref="inputRef" v-model="selectState.inputValue" :disabled="disabled"
-                :placeholder="filteredPlaceHolder" :readonly="!filterable || !isDropdownShow" @input="onFilter">
+                :placeholder="filteredPlaceHolder" :readonly="!filterable || !isDropdownShow" @input="debounceOnFliter"
+                @keydown="handleKeyDown">
 
             <template #suffix>
                 <!-- 清除图标 -->
@@ -187,7 +239,8 @@ const optionSelect = async (e: SelectOption) => {
                     <template v-for="(item, index) in filteredOptions" :key="index">
                         <li class="yv-select__menu-item" :class="{
                             'is-disabled': item.disabled,
-                            'is-selected': selectState.selectedOption?.value === item.value
+                            'is-selected': selectState.selectedOption?.value === item.value,
+                            'is-highlight': selectState.highlightIndex === index
                         }" :id="`select-item-${item.value}`" @click.stop="optionSelect(item)"
                             @mousedown.prevent="NOOP">
                             <RenderVnode :v-node="renderLabel ? renderLabel(item) : item.label" />
