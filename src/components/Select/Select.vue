@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, computed, nextTick } from 'vue';
+import { ref, reactive, computed, nextTick, watch } from 'vue';
 import Tooltip from '../Tooltip/Tooltip.vue';
 import Input from '../Input/Input.vue';
 import Icon from '../Icon/Icon.vue';
@@ -9,6 +9,7 @@ import type { SelectsProps, SelectEmits, SelectOption, SelectState } from './typ
 import type { TooltipInstance } from '../Tooltip/types';
 import type { Ref } from 'vue';
 import type { InputInstance } from '../Input/types'
+import { isFunction } from 'lodash-es';
 
 const findOption = (value: string) => {
     const option = props.options.find(option => option.value === value)
@@ -63,12 +64,46 @@ const popperOptions: any = {
         }
     ],
 }
+// 可筛选
+const filteredOptions = ref(props.options)
+watch(() => props.options, (newVal) => {
+    filteredOptions.value = newVal
+})
+// 定义用于筛选的函数
+const generateFilterOptions = (searchValue: string) => {
+    if (!props.filterable) return
+    if (props.filterMethod && isFunction(props.filterMethod)) {
+        filteredOptions.value = props.filterMethod(searchValue)
+    } else {
+        filteredOptions.value = props.options.filter(option => option.label.includes(searchValue))
+    }
+}
+
+// 开始筛选，绑定到input事件
+const onFilter = () => {
+    generateFilterOptions(selectState.inputValue)
+}
+// 处理placeholder
+const filteredPlaceHolder = computed(() => {
+    return (props.filterable && selectState.selectedOption && isDropdownShow.value) ? selectState.selectedOption.label : props.placeholder
+})
 // 处理打开关闭
 const controlDropdown = (show: boolean) => {
     if (show) {
+        // filter模式
+        // 之前选择过的值
+        if (props.filterable && selectState.selectedOption) {
+            selectState.inputValue = ''
+        }
+        if (props.filterable) {
+            generateFilterOptions(selectState.inputValue)
+        }
         tooltipRef.value.show()
     } else {
         tooltipRef.value.hide()
+        if (props.filterable) {
+            selectState.inputValue = selectState.selectedOption ? selectState.selectedOption.label : ''
+        }
     }
     isDropdownShow.value = show
     emits('visible-change', show)
@@ -109,7 +144,8 @@ const optionSelect = async (e: SelectOption) => {
         <Tooltip ref="tooltipRef" placement="bottom-start" manual :popper-options="popperOptions"
             @click-outside="controlDropdown(false)">
 
-            <Input ref="inputRef" v-model="selectState.inputValue" :disabled="disabled" :placeholder="placeholder">
+            <Input ref="inputRef" v-model="selectState.inputValue" :disabled="disabled"
+                :placeholder="filteredPlaceHolder" :readonly="!filterable || !isDropdownShow" @input="onFilter">
 
             <template #suffix>
                 <!-- 清除图标 -->
@@ -123,7 +159,7 @@ const optionSelect = async (e: SelectOption) => {
             </Input>
             <template #content>
                 <ul class="yv-select__menu">
-                    <template v-for="(item, index) in options" :key="index">
+                    <template v-for="(item, index) in filteredOptions" :key="index">
                         <li class="yv-select__menu-item" :class="{
                             'is-disabled': item.disabled,
                             'is-selected': selectState.selectedOption?.value === item.value

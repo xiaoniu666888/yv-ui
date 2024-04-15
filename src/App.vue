@@ -226,13 +226,13 @@ const customRender = (option: any) => {
     <Switch v-model="switchValue" size="large" active-text="on" inactive-text="off">
     </Switch>
     <hr>
-    <Select v-model="selectTest" :options="selectOptions" clearable placeholder="请选择"></Select>
-    {{ selectTest }}
+    <!-- <Select v-model="selectTest" :options="selectOptions" clearable placeholder="请选择"></Select>
+    {{ selectTest }} -->
 
 
     <hr>
 
-    <Select v-model="selectTest" :options="selectOptions" clearable placeholder="请选择"
+    <Select filterable v-model="selectTest" :options="selectOptions" clearable placeholder="请选择"
       :render-label="customRender"></Select>
     {{ selectTest }}
   </main>

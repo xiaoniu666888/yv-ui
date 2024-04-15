@@ -1,6 +1,7 @@
 import type { VNode } from 'vue'
-export type RenderLabelFunc = (option: SelectOption) => VNode
 
+export type RenderLabelFunc = (option: SelectOption) => VNode
+export type CustomFilterFunc = (value: string) => SelectOption[]
 export interface SelectOption {
   label: string
   value: string
@@ -16,7 +17,10 @@ export interface SelectsProps {
   placeholder: string
   disabled?: boolean
   clearable?: boolean
+  // 自定义渲染节点
   renderLabel?: RenderLabelFunc
+  filterable?: boolean
+  filterMethod?: CustomFilterFunc
 }
 
 export interface SelectState {
