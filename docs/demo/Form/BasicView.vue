@@ -39,10 +39,18 @@ const rules = {
 }
 const formRef = ref()
 const submit = async () => {
-    alert('submitted!')
+    try {
+        await formRef.value.validate()
+        console.log('验证成功')
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 const reset = () => {
     formRef.value.resetFields()
+    // formRef.value.clearValidates()
+
 }
 </script>
 
@@ -57,19 +65,18 @@ const reset = () => {
             </FormItem>
             <FormItem prop="password" label="the password">
                 <Input v-model="model.password" type="password" />
-                <template #label="{ label }">
+                <!-- <template #label="{ label }">
                     <Button>{{ label }}</Button>
-                </template>
+                </template> -->
             </FormItem>
 
             <FormItem prop="test" label="the test">
                 <template #default="{ validate }">
                     <input v-model="model.test" type="text" @blur="validate">
-
                 </template>
             </FormItem>
             <FormItem>
-                <Button @click.prevent="submit" type="primary">Submit</Button>
+                <Button @click="submit" type="primary">Submit</Button>
                 <Button @click.prevent="reset">Reset</Button>
             </FormItem>
         </Form>

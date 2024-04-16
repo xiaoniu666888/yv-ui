@@ -11,9 +11,11 @@ defineOptions({
 })
 const props = withDefaults(defineProps<InputProps>(), { type: 'text', autocomplete: 'off' })
 const emits = defineEmits<InputEmits>()
-const formItemContext = formItemContextKey && inject(formItemContextKey) || null
+const formItemContext = inject(formItemContextKey, undefined)
 const handleValidate = (trigger?: string) => {
-    formItemContext && formItemContext?.validate(trigger)
+    formItemContext?.validate(trigger).catch(err => {
+        console.warn(err.errors)
+    })
 }
 const attrs = useAttrs()
 const innerValue = ref(props.modelValue)

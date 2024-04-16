@@ -43,8 +43,11 @@
   .yv-form-item.is-error .yv-input__wrapper {
     box-shadow: 0 0 0 1px var(--yv-color-danger) inset;
   }
+  .yv-form-item.is-success .yv-input__wrapper {
+    box-shadow: 0 0 0 1px var(--yv-color-success) inset;
+  }
   .yv-form-item.is-required > .yv-form-item__label:before {
     content: "*";
-    color: var(--yv-color-danger);
+    color: var(--yv-color-danger); 
     margin-right: 4px;
   }

@@ -4,12 +4,12 @@ import { formContextKey, formItemContextKey } from './types';
 import { isNil } from 'lodash-es'
 import Schema from 'async-validator'
 
-import type { FormItemProps, FormValidateFailure, FormItemContext } from './types'
+import type { FormItemProps, FormValidateFailure, FormItemContext, ValidateStatusProp, FormItemInstance } from './types'
 const props = defineProps<FormItemProps>()
 const formContext = inject(formContextKey)
 
 // 关于校验的信息
-const validateStatus = reactive({
+const validateStatus: ValidateStatusProp = reactive({
     state: 'init',
     errorMsg: '',
     loading: false
@@ -24,6 +24,8 @@ const innerValue = computed(() => {
     }
 })
 
+let initialValue: any = null
+
 // 传递rules
 const itemRlues = computed(() => {
     const rules = formContext?.rules
@@ -32,6 +34,10 @@ const itemRlues = computed(() => {
     } else {
         return []
     }
+})
+// 是否为必填项
+const isRequired = computed(() => {
+    return itemRlues.value?.some(rule => rule.required)
 })
 const getTriggeredRules = (trigger?: string) => {
     const rules = itemRlues.value
@@ -46,16 +52,18 @@ const getTriggeredRules = (trigger?: string) => {
     }
 }
 // 借助第三方库完成校验
-const validate = (trigger?: string) => {
+const validate = async (trigger?: string) => {
     const modelName = props.prop
     const triggeredRules = getTriggeredRules(trigger)
-    if (triggeredRules.length === 0) return true
+    if (triggeredRules.length === 0) {
+        return true
+    }
     if (modelName) {
         const validator = new Schema({
             [modelName]: triggeredRules
         })
         validateStatus.loading = true
-        validator.validate({ [modelName]: innerValue.value })
+        return validator.validate({ [modelName]: innerValue.value })
             .then(() => {
                 validateStatus.state = 'success'
             })
@@ -63,27 +71,51 @@ const validate = (trigger?: string) => {
                 const { errors } = err
                 validateStatus.state = 'error'
                 validateStatus.errorMsg = (errors && errors.length > 0) ? errors[0].message || '' : ''
+                return Promise.reject(err)
 
             }).finally(() => {
                 validateStatus.loading = false
             })
     }
 }
+// clear validate
+const clearValidate = () => {
+    validateStatus.state = 'init'
+    validateStatus.errorMsg = ''
+    validateStatus.loading = false
+}
+
+const resetField = () => {
+    const model = formContext?.model
+    clearValidate()
+    if (model && props.prop && model[props.prop]) {
+        model[props.prop] = initialValue
+    }
+}
 
 const context: FormItemContext = {
     validate,
-    prop: props.prop || ''
+    prop: props.prop || '',
+    clearValidate,
+    resetField
 }
 provide(formItemContextKey, context)
 
 onMounted(() => {
     if (props.prop) {
         formContext?.addField(context)
+        initialValue = innerValue.value
     }
 })
 
 onUnmounted(() => {
     formContext?.removeField(context)
+})
+defineExpose<FormItemInstance>({
+    validateStatus,
+    validate,
+    resetField,
+    clearValidate
 })
 </script>
 
@@ -92,7 +124,8 @@ onUnmounted(() => {
     <div class="yv-form-item" :class="{
         'is-error': validateStatus.state === 'error',
         'is-success': validateStatus.state === 'success',
-        'is-loading': validateStatus.loading
+        'is-loading': validateStatus.loading,
+        'is-required': isRequired
     }">
         <label class="yv-form-item__label">
             <slot name="label" :label="label">

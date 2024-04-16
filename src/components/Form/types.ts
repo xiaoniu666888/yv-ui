@@ -28,7 +28,9 @@ export interface FormContext extends FormProps {
 
 export interface FormItemContext {
   prop: string
-  validate: (trigger?: string) => any
+  validate: (trigger?: string) => Promise<any>
+  resetField: (props?: string[]) => void
+  clearValidate: (props?: string[]) => void
 }
 
 // 表单验证失败
@@ -37,6 +39,24 @@ export interface FormValidateFailure {
   errors: ValidateError[] | null
   // 表示哪些表单字段验证失败以及每个字段的具体验证错误
   fields: ValidateFieldsError
+}
+export interface FormInstance {
+  validate: () => Promise<any>
+  resetFields: (props?: string[]) => void
+  clearValidates: (props?: string[]) => void
+}
+
+export interface ValidateStatusProp {
+  state: 'init' | 'success' | 'error'
+  errorMsg: string
+  loading: boolean
+}
+
+export interface FormItemInstance {
+  validateStatus: ValidateStatusProp
+  validate: (trigger?: string) => Promise<any>
+  resetField: (props?: string[]) => void
+  clearValidate: (props?: string[]) => void
 }
 
 export const formContextKey: InjectionKey<FormContext> =
