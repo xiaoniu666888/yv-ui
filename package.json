@@ -3,6 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "files": ["dist"],
+  "main": "./dist/yv-element.umd.cjs",
+  "module": "./dist/yv-element.js",
+  "exports":{
+    ".":{
+      "import":"./dist/yv-element.js",
+      "require":"./dist/yv-element.umd.cjs"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
