@@ -2,13 +2,29 @@
 import { provide } from 'vue'
 import { formContextKey } from './types'
 
-import type { FormProps } from './types'
-
-const props = defineProps<FormProps>()
+import type { FormProps, FormItemContext, FormContext } from './types'
 defineOptions({
     name: 'YvFrom'
 })
-provide(formContextKey, props)
+const props = defineProps<FormProps>()
+const fields: FormItemContext[] = []
+const addField: FormContext['addField'] = (field) => {
+    fields.push(field)
+}
+
+const removeField: FormContext['removeField'] = (field) => {
+    if (field.prop) {
+        fields.splice(fields.indexOf(field), 1)
+    }
+}
+const validate = () => {
+    console.log(fields)
+}
+provide(formContextKey, {
+    ...props,
+    addField,
+    removeField
+})
 
 </script>
 
@@ -17,6 +33,7 @@ provide(formContextKey, props)
     <form class="yv-form">
         <slot />
     </form>
+    <button @click="validate">Validate all</button>
 </template>
 
 

@@ -26,7 +26,8 @@ const model = reactive({
 const rules = {
     // name: [{ type: 'string', required: true, trigger: 'blur' }, { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },],
     email: [
-        { type: 'email', required: true, trigger: 'blur' }
+        { type: 'email', required: true, trigger: 'blur' },
+        { type: 'string', required: true, trigger: 'input' }
     ],
     password: [
         { type: 'string', required: true, trigger: 'blur' },
@@ -34,7 +35,7 @@ const rules = {
     ],
     agreement: [{ type: 'enum', required: true, enum: [true], message: '请同意协议' }],
     zone: [{ type: 'string', required: true, trigger: 'change' }],
-    test: [{ type: 'string', required: true, trigger: 'change' }],
+    test: [{ type: 'string', required: true, trigger: 'blur' }],
 }
 const formRef = ref()
 const submit = async () => {

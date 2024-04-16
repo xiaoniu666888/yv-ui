@@ -5,7 +5,12 @@ import type {
   ValidateFieldsError
 } from 'async-validator'
 
-export type FormRules = Record<string, RuleItem[]>
+export interface FormItemRule extends RuleItem {
+  trigger?: string
+}
+
+export type FormRules = Record<string, FormItemRule[]>
+
 export interface FormProps {
   model?: Record<string, any>
   rules?: FormRules
@@ -16,10 +21,14 @@ export interface FormItemProps {
   prop?: string
 }
 
-export interface FormContext extends FormProps {}
+export interface FormContext extends FormProps {
+  addField: (filed: FormItemContext) => void
+  removeField: (filed: FormItemContext) => void
+}
 
 export interface FormItemContext {
-  validate: () => any
+  prop: string
+  validate: (trigger?: string) => any
 }
 
 // 表单验证失败

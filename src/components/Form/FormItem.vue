@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, computed, reactive, provide } from 'vue';
+import { inject, computed, reactive, provide, onMounted, onUnmounted } from 'vue';
 import { formContextKey, formItemContextKey } from './types';
 import { isNil } from 'lodash-es'
 import Schema from 'async-validator'
@@ -33,13 +33,26 @@ const itemRlues = computed(() => {
         return []
     }
 })
+const getTriggeredRules = (trigger?: string) => {
+    const rules = itemRlues.value
+    if (rules) {
+        return rules.filter(rule => {
+            if (!rule.trigger || !trigger) return true
 
+            return rule.trigger && rule.trigger === trigger
+        })
+    } else {
+        return []
+    }
+}
 // 借助第三方库完成校验
-const validate = () => {
+const validate = (trigger?: string) => {
     const modelName = props.prop
+    const triggeredRules = getTriggeredRules(trigger)
+    if (triggeredRules.length === 0) return true
     if (modelName) {
         const validator = new Schema({
-            [modelName]: itemRlues.value
+            [modelName]: triggeredRules
         })
         validateStatus.loading = true
         validator.validate({ [modelName]: innerValue.value })
@@ -58,9 +71,20 @@ const validate = () => {
 }
 
 const context: FormItemContext = {
-    validate
+    validate,
+    prop: props.prop || ''
 }
 provide(formItemContextKey, context)
+
+onMounted(() => {
+    if (props.prop) {
+        formContext?.addField(context)
+    }
+})
+
+onUnmounted(() => {
+    formContext?.removeField(context)
+})
 </script>
 
 
@@ -80,7 +104,5 @@ provide(formItemContextKey, context)
                 {{ validateStatus.errorMsg }}
             </div>
         </div>
-        <button @click.prevent="validate">Validate</button>
     </div>
-
 </template>

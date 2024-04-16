@@ -12,8 +12,8 @@ defineOptions({
 const props = withDefaults(defineProps<InputProps>(), { type: 'text', autocomplete: 'off' })
 const emits = defineEmits<InputEmits>()
 const formItemContext = formItemContextKey && inject(formItemContextKey) || null
-const handleValidate = () => {
-    formItemContext && formItemContext?.validate()
+const handleValidate = (trigger?: string) => {
+    formItemContext && formItemContext?.validate(trigger)
 }
 const attrs = useAttrs()
 const innerValue = ref(props.modelValue)
@@ -41,11 +41,13 @@ const handleInput = () => {
     // console.log('input')
     emits('update:modelValue', innerValue.value)
     emits('input', innerValue.value)
+    handleValidate('input')
 }
 
 const handleChange = () => {
     // console.log('change')
     emits('change', innerValue.value)
+    handleValidate('change')
 }
 
 const handleFocus = (event: FocusEvent) => {
@@ -56,7 +58,7 @@ const handleFocus = (event: FocusEvent) => {
 const handleBlur = (event: FocusEvent) => {
     isFocus.value = false
     emits('blur', event)
-    handleValidate()
+    handleValidate('blur')
     // console.log('blur')
 }
 const clearValue = () => {
