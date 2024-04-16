@@ -3,20 +3,25 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "files": ["dist"],
-  "main": "./dist/yv-element.umd.cjs",
-  "module": "./dist/yv-element.js",
-  "exports":{
-    ".":{
-      "import":"./dist/yv-element.js",
-      "require":"./dist/yv-element.umd.cjs"
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/umd/yv-element.umd.cjs",
+  "module": "./dist/es/yv-element.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/es/yv-element.js",
+      "require": "./dist/umd/yv-element.umd.cjs"
     }
   },
   "scripts": {
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "run-p build-es build-umd",
     "preview": "vite preview",
     "build-only": "vite build",
+    "build-umd": "vite build --config vite.umd.config.ts",
+    "build-es": "vite build --config vite.es.config.ts",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "docs:dev": "vitepress dev docs",
@@ -53,6 +58,7 @@
     "postcss-nested": "^6.0.1",
     "typescript": "~5.4.0",
     "vite": "^5.1.6",
+    "vite-plugin-dts": "^3.8.3",
     "vitepress": "^1.1.0",
     "vitest": "^1.4.0",
     "vue-tsc": "^2.0.6"

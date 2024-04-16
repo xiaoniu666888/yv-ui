@@ -1,11 +1,12 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/**/*.vue","src/**/*.ts", "postcss.config.cjs",],
-  "exclude": ["src/**/__tests__/*"],
+  "include": ["env.d.ts", "src/**/*", "src/**/**/*.vue"
+],
+  "exclude": ["src/components/**/__test__/*"],
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
+    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

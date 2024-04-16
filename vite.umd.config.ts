@@ -20,18 +20,15 @@ export default defineConfig({
     }
   },
   build: {
+    outDir: 'dist/umd',
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'YvElement',
-      fileName: 'yv-element'
+      fileName: 'yv-element',
+      formats: ['umd']
     },
     rollupOptions: {
-      external: [
-        'vue',
-        '@fortawesome/fontawesome-svg-core',
-        '@fortawesome/free-solid-svg-icons',
-        '@fortawesome/vue-fontawesome'
-      ],
+      external: ['vue'],
       output: {
         exports: 'named',
         globals: {
