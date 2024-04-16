@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { SwitchProps, SwitchEmits } from './types'
 import { ref, computed, onMounted, watch } from 'vue';
+defineOptions({
+    name: 'YvSwitch'
+})
 const props = withDefaults(defineProps<SwitchProps>(), {
     activeValue: true,
     inactiveValue: false

@@ -7,7 +7,9 @@ import Icon from '../Icon/Icon.vue'
 import useEventListener from '../../hooks/useEventListener';
 
 import type { MessageProps } from './types'
-
+defineOptions({
+    name: 'YvMessage'
+})
 // const instance = getCurrentInstance()
 // console.log(instance)
 const props = withDefaults(defineProps<MessageProps>(), {

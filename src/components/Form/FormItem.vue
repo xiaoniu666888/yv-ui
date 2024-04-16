@@ -5,6 +5,10 @@ import { isNil } from 'lodash-es'
 import Schema from 'async-validator'
 
 import type { FormItemProps, FormValidateFailure, FormItemContext, ValidateStatusProp, FormItemInstance } from './types'
+defineOptions({
+    name: "YvFormItem"
+})
+
 const props = defineProps<FormItemProps>()
 const formContext = inject(formContextKey)
 

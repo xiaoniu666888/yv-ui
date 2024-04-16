@@ -10,7 +10,9 @@ import type { TooltipInstance } from '../Tooltip/types';
 import type { Ref } from 'vue';
 import type { InputInstance } from '../Input/types'
 import { debounce, isFunction } from 'lodash-es';
-
+defineOptions({
+    name: 'YvSelect'
+})
 const findOption = (value: string) => {
     const option = props.options.find(option => option.value === value)
     return option ? option : null

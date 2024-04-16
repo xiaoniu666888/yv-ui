@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import type { ButtonProps } from './types';
 import Icon from '../Icon/Icon.vue'
 defineOptions({
-    name: "YButton"
+    name: "YvButton"
 })
 withDefaults(defineProps<ButtonProps>(), {
     nativeType: 'button'

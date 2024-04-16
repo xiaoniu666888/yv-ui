@@ -5,6 +5,10 @@ import useCilckOutside from '@/hooks/useUtilTooltip'
 import { debounce } from 'lodash-es';
 import type { TooltipProps, TooltipEmits, TooltipInstance } from './types'
 import type { Instance } from '@popperjs/core'
+
+defineOptions({
+    name: 'YvTooltip'
+})
 // props属性
 const props = withDefaults(defineProps<TooltipProps>(), {
     placement: 'bottom',

@@ -5,7 +5,9 @@ import RenderVnode from '@/common/RenderVnode';
 
 import type { DropdownProps, DropdownEmits, MenuOption, DropdownInstance } from './types';
 import type { TooltipInstance } from '../Tooltip/types';
-
+defineOptions({
+    name: "YvDropdown"
+})
 
 const tooltipRef = ref<TooltipInstance | null>(null)
 const props = withDefaults(defineProps<DropdownProps>(), {

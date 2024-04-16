@@ -6,7 +6,7 @@ import { formContextKey } from './types'
 import type { FormProps, FormItemContext, FormContext, FormValidateFailure, FormInstance } from './types'
 import type { ValidateFieldsError } from 'async-validator'
 defineOptions({
-    name: 'YvFrom'
+    name: 'YvForm'
 })
 const props = defineProps<FormProps>()
 const fields: FormItemContext[] = []
