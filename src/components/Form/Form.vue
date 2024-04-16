@@ -65,5 +65,4 @@ defineExpose<FormInstance>({
     <form class="yv-form">
         <slot />
     </form>
-    <button @click="validate">Validate all</button>
 </template>

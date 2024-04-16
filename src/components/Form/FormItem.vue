@@ -10,7 +10,7 @@ defineOptions({
 })
 
 const props = defineProps<FormItemProps>()
-const formContext = inject(formContextKey)
+const formContext = inject(formContextKey, undefined)
 
 // 关于校验的信息
 const validateStatus: ValidateStatusProp = reactive({

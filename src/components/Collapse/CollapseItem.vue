@@ -9,7 +9,7 @@ defineOptions({
 })
 const props = defineProps<CollapseItemProps>()
 // 接受祖先组件传递过来的参数
-const collapseContext = inject(collapseContextKey)
+const collapseContext = inject(collapseContextKey, undefined)
 // 根据是否被添加到数据进行显示/隐藏处理
 const isActive = computed(() => collapseContext?.activeNames.value.includes(props.name))
 
