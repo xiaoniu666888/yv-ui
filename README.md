@@ -21,7 +21,7 @@ createApp(App).use(YvElement).mount('#app')
 
 ```vue
 <template>
-  <yv-button>我是 Yv Button</-button>
+  <yv-button>我是 Yv Button</yv-button>
 </template>
 ```
 
