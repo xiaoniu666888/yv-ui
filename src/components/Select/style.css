@@ -33,8 +33,8 @@
       padding: 10px 0;
       margin: 0;
       text-align: center;
-      color: var(--vk-text-color-secondary);
-      font-size: var(--vk-select-font-size);
+      color: var(--yv-text-color-secondary);
+      font-size: var(--yv-select-font-size);
     }
     .yv-select__menu {
       list-style: none;
