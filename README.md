@@ -4,6 +4,10 @@
 npm i yv-element --save
 ```
 
+## 使用文档
+
+https://yv-ui.y-y-y.online/
+
 ## 开始使用
 
 **全局使用**
