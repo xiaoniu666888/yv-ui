@@ -8,7 +8,7 @@ import {
 } from '@vitepress-demo-preview/plugin'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: 'V Element',
+  title: 'Yv Element',
   description: 'A VitePress Site',
   vite: {
     plugins: [vueJsx()],
@@ -25,16 +25,9 @@ export default defineConfig({
     }
   },
   themeConfig: {
-    footer: {
-      message: '<a href="https://beian.miit.gov.cn/">津ICP备20000929号-1</a>',
-      copyright:
-        'Copyright © 2019-present <a href="https://coding.imooc.com/class/693.html">慕课网 & 张轩</a>'
-    },
-    // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '开始使用', link: '/get-started' },
-      { text: '组件', link: '/components/button' },
-      { text: '课程', link: 'https://coding.imooc.com/class/693.html' }
+      { text: '组件', link: '/components/button' }
     ],
 
     sidebar: [
@@ -55,7 +48,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/xiaoniu666888/yv-ui' }
     ]
   }
 })
