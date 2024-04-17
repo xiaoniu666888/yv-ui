@@ -66,7 +66,7 @@
   /*circle*/
   &.is-circle {
     border-radius: 50%;
-    padding: 0px;
+    padding: 8px;
   }
   /*disabled*/
   &.is-disabled,

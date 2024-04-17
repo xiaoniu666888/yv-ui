@@ -5,7 +5,7 @@
   "type": "module",
   "author": "Mars_xiaoniu",
   "private": false,
-  "license":"MIT",
+  "license": "MIT",
   "keywords": [
     "Component",
     "UI",
@@ -13,11 +13,15 @@
   ],
   "homepage": "https://github.com/xiaoniu666888/yv-ui",
   "repository": {
-    "type":"git",
-    "url":"https://github.com/xiaoniu666888/yv-ui"
+    "type": "git",
+    "url": "https://github.com/xiaoniu666888/yv-ui"
   },
-  "files": ["dist"],
-  "sideEffects":[ "dist/index.css" ],
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "dist/index.css"
+  ],
   "main": "./dist/umd/yv-element.umd.cjs",
   "module": "./dist/es/yv-element.js",
   "types": "./dist/types/index.d.ts",
@@ -38,7 +42,7 @@
     "build-only": "run-p build-es build-umd",
     "build-umd": "vite build --config vite.umd.config.ts",
     "build-es": "vite build --config vite.es.config.ts",
-    "move-style":"move-file dist/es/index.css dist/index.css",
+    "move-style": "move-file dist/es/index.css dist/index.css",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "docs:dev": "vitepress dev docs",
@@ -51,6 +55,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@popperjs/core": "^2.11.8",
+    "@vitepress-demo-preview/component": "^2.3.2",
+    "@vitepress-demo-preview/plugin": "^1.2.3",
     "async-validator": "^4.2.5",
     "lodash-es": "^4.17.21"
   },
@@ -82,7 +88,7 @@
     "vite-plugin-dts": "^3.8.3",
     "vitepress": "^1.1.0",
     "vitest": "^1.4.0",
-    "vue-tsc": "^2.0.6",
-    "vue": "^3.4.21"
+    "vue": "^3.4.21",
+    "vue-tsc": "^2.0.6"
   }
 }

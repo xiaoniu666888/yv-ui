@@ -15,7 +15,7 @@ export interface SelectsProps {
   // 选项
   options?: SelectOption[]
   //   表单属性
-  placeholder: string
+  placeholder?: string
   disabled?: boolean
   clearable?: boolean
   // 自定义渲染节点

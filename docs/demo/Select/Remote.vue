@@ -74,5 +74,11 @@ const remoteFilter = (query) => {
 }
 </script>
 <template>
-  <Select v-model="test" placeholder="搜索远程结果" filterable remote :remote-method="remoteFilter" />
+  <Select 
+    v-model="test" 
+    placeholder="搜索远程结果"
+    filterable
+    remote
+    :remote-method="remoteFilter"
+  />
 </template>
