@@ -1,39 +1,42 @@
-# ui
+# 安装
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```bash
+npm i yv-element --save
 ```
 
-### Compile and Hot-Reload for Development
+## 开始使用
 
-```sh
-npm run dev
+**全局使用**
+
+```js
+// 引入所有组件
+import YvElement from 'yv-element'
+// 引入样式
+import 'yv-element/dist/index.css'
+
+import App from './App.vue'
+// 全局使用
+createApp(App).use(YvElement).mount('#app')
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
+```vue
+<template>
+  <yv-button>我是 Yv Button</-button>
+</template>
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+**单个导入**
 
-```sh
-npm run lint
+Yv Element 提供了基于 ES Module 的开箱即用的 Tree Shaking 功能。
+
+```vue
+<template>
+  <Button>我是 Yv Button</Button>
+</template>
+<script>
+import { Button } from ' yv-element'
+export default {
+  components: { Button }
+}
+</script>
 ```
