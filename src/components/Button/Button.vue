@@ -30,6 +30,3 @@ defineExpose({
         </span>
     </button>
 </template>
-
-
-<style scoped></style>
