@@ -42,7 +42,9 @@ export default defineConfig({
           { text: 'Input 文字输入', link: '/components/input' },
           { text: 'Switch 开关', link: '/components/switch' },
           { text: 'Select 选择器', link: '/components/select' },
-          { text: 'Form 表单', link: '/components/form' }
+          { text: 'Form 表单', link: '/components/form' },
+          { text: 'Icon 图标, 待补全' },
+          { text: '其他常用组件更新中...' }
         ]
       }
     ],
