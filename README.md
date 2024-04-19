@@ -39,6 +39,7 @@ Yv Element 提供了基于 ES Module 的开箱即用的 Tree Shaking 功能。
 </template>
 <script>
 import { Button } from 'yv-element'
+import 'yv-element/dist/index.css'
 export default {
   components: { Button }
 }
