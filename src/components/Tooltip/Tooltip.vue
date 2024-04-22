@@ -150,10 +150,5 @@ defineExpose<TooltipInstance>({
                 <div id="arrow" data-popper-arrow></div>
             </div>
         </Transition>
-
-
     </div>
 </template>
-
-
-<style scoped></style>

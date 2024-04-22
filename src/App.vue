@@ -158,6 +158,9 @@ const customRender = (option: any) => {
 
       <Collapse v-model="openValue" accordion>
         <CollapseItem name="a" title="Title A">
+          <!-- <template #title>
+            title A slot
+          </template> -->
           <h1>headline title</h1>
           <div>this is content </div>
         </CollapseItem>

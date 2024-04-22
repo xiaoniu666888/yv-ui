@@ -18,7 +18,7 @@ const handleClick = () => {
     collapseContext?.handleItemClick(props.name)
     // console.log(isActive.value)
 }
-
+// 过渡动画事件处理
 const transitionEvents: Record<string, (el: HTMLElement) => void> = {
     beforeEnter(el) {
         el.style.height = '0px'
@@ -65,10 +65,5 @@ const transitionEvents: Record<string, (el: HTMLElement) => void> = {
                 </div>
             </div>
         </Transition>
-
-
     </div>
 </template>
-
-
-<style scoped></style>
