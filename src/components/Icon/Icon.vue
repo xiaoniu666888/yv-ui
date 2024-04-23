@@ -14,12 +14,8 @@ const customStyles = computed(() => {
 })
 </script>
 
-
 <template>
     <i class="yv-icon" :class="{ [`yv-icon--${type}`]: type }" :style="customStyles" v-bind="$attrs">
         <font-awesome-icon v-bind="filterProps" />
     </i>
 </template>
-
-
-<style scoped></style>
