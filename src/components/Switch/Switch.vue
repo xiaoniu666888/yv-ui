@@ -46,7 +46,7 @@ watch(() => props.modelValue, (newVal) => {
 
         <div class="yv-switch__core">
             <div class="yv-switch__core-inner">
-                <span class="yv-switch__core-inner-text" v-if="activeText || inactiveText" yv-switch__core-inner-text>
+                <span class="yv-switch__core-inner-text" v-if="activeText || inactiveText">
                     {{ checked ? activeText : inactiveText }}
                 </span>
             </div>

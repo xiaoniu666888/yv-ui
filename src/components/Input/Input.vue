@@ -72,7 +72,6 @@ const clearValue = () => {
     emits('change', '')
 }
 
-
 watch(() => props.modelValue, (newVal) => {
     innerValue.value = newVal
 })
@@ -81,7 +80,6 @@ defineExpose({
 })
 
 </script>
-
 
 <template>
     <div class="yv-input" :class="{

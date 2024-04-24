@@ -53,7 +53,7 @@ export function YvMessage(props: CreateMessageProps) {
 
   return instance
 }
-
+// 拿到最后一个组件实例
 export const getLastInstance = () => {
   return instances.at(-1)
 }
@@ -72,7 +72,7 @@ export const getLastBottomOffset = (id: string) => {
     return prev.vm.exposed!.bottomOffset.value
   }
 }
-
+// 关闭所有组件
 export const closeAll = () => {
   instances.forEach((instance) => {
     instance.destroy()

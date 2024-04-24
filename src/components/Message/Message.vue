@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<MessageProps>(), {
     duration: 3000,
     offset: 20,
     transitionName: 'fade-up'
-
 })
 const visible = ref<boolean>(false)
 // const instance = getLastInstance()
@@ -102,8 +101,4 @@ defineExpose({
             </div>
         </div>
     </Transition>
-
 </template>
-
-
-<style scoped></style>

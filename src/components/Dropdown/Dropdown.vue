@@ -60,6 +60,3 @@ defineExpose<DropdownInstance>({
         </Tooltip>
     </div>
 </template>
-
-
-<style scoped></style>
