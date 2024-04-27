@@ -39,7 +39,6 @@ export function YvMessage(props: CreateMessageProps) {
   //   console.log('vnode', vnode)
   render(vnode, container)
 
-  //   ! => 非空判断言符
   document.body.appendChild(container.firstElementChild!)
   const vm = vnode.component!
   const instance = {

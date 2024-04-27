@@ -145,7 +145,10 @@ const customRender = (option: any) => {
         <Button size="large">Large</Button>
         <Button size="small">Small</Button>
         <Button type="info" round> circle </Button>
-        <Button type="success" circle>cilcle</Button>
+        <Button type="success" circle>
+          <Icon icon="star" />
+        </Button>
+        <Button icon="star"> Star Button </Button>
       </div>
       <hr>
       <div class="button">

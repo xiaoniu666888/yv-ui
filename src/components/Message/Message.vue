@@ -19,8 +19,6 @@ const props = withDefaults(defineProps<MessageProps>(), {
     transitionName: 'fade-up'
 })
 const visible = ref<boolean>(false)
-// const instance = getLastInstance()
-// console.log("instance=>", instance)
 
 const messageRef = ref<HTMLDivElement>()
 // 计算偏移高度
