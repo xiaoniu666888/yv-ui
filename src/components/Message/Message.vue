@@ -68,11 +68,6 @@ function keydown(e: Event) {
 }
 useEventListener(document, 'keydown', keydown)
 
-// watch(visible, (newVal) => {
-//     if (!newVal) {
-//         props.useDestroy()
-//     }
-// })
 function destroyComponent() {
     props.useDestroy()
 }

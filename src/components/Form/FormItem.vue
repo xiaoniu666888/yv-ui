@@ -133,7 +133,8 @@ defineExpose<FormItemInstance>({
     }">
         <label class="yv-form-item__label">
             <slot name="label" :label="label">
-                {{ label }}</slot>
+                {{ label }}
+            </slot>
         </label>
         <div class="yv-form-item__content">
             <slot :validate="validate"></slot>
