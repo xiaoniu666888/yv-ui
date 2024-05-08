@@ -20,12 +20,12 @@ export interface FormItemProps {
   label?: string
   prop?: string
 }
-
+// 传递给Form-Item
 export interface FormContext extends FormProps {
   addField: (filed: FormItemContext) => void
   removeField: (filed: FormItemContext) => void
 }
-
+// 传递给单个表单元素
 export interface FormItemContext {
   prop: string
   validate: (trigger?: string) => Promise<any>
@@ -40,6 +40,7 @@ export interface FormValidateFailure {
   // 表示哪些表单字段验证失败以及每个字段的具体验证错误
   fields: ValidateFieldsError
 }
+// Form实例
 export interface FormInstance {
   validate: () => Promise<any>
   resetFields: (props?: string[]) => void
@@ -51,7 +52,7 @@ export interface ValidateStatusProp {
   errorMsg: string
   loading: boolean
 }
-
+// FormItem实例
 export interface FormItemInstance {
   validateStatus: ValidateStatusProp
   validate: (trigger?: string) => Promise<any>
