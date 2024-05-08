@@ -7,7 +7,8 @@ npm i yv-element --save
 ## 使用文档
 
 https://yv-ui.y-y-y.online/
-
+## 细节描述
+在掘金上放了一个专栏用于描述开发过程<a href="https://juejin.cn/column/7358732381489315879">仿照Element Plus写一个组件库——Yv Element</a>
 ## 开始使用
 
 **全局使用**
