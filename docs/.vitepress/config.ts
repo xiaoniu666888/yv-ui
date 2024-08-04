@@ -51,6 +51,10 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/xiaoniu666888/yv-ui' }
-    ]
+    ],
+    footer: {
+      message: '<a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备2024071868号-2</a>',
+      copyright: 'Copyright © 2024 yv-ui yv-element'
+    }
   }
 })

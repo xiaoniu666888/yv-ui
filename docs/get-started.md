@@ -6,7 +6,7 @@ npm i yv-element --save
 
 ## 使用文档
 
-https://yv-ui.y-y-y.online/
+https://yv-ui.emojilliu4.top/
 
 ## 开始使用
 
