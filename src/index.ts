@@ -15,6 +15,7 @@ import Input from '@/components/Input'
 import Select from '@/components/Select'
 import Switch from '@/components/Switch'
 import Tooltip from '@/components/Tooltip'
+import TimeLine, { TimelineItem } from '@/components/Timeline'
 
 import './styles/index.css'
 
@@ -32,7 +33,9 @@ const components = [
   Input,
   Select,
   Switch,
-  Tooltip
+  Tooltip,
+  TimeLine,
+  TimelineItem
 ]
 
 const install = (app: App) => {
@@ -55,6 +58,8 @@ export {
   Select,
   Switch,
   Tooltip,
+  TimeLine,
+  TimelineItem,
   YvMessage,
   closeMessageAll
 }

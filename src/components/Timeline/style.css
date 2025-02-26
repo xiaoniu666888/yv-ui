@@ -1,0 +1,136 @@
+.yv-timeline {
+  margin: 0 !important;
+  font-size: 14px;
+  list-style: none !important;
+
+  &-item {
+    position: relative;
+    padding-bottom: 20px;
+
+    &:last-child &-tail {
+      display: none;
+    }
+
+    &-center {
+      display: flex;
+      align-items: center;
+
+      .yv-timeline-item-wrapper {
+        width: 100%;
+      }
+
+      .yv-timeline-item-tail {
+        top: 0;
+      }
+      &:first-child {
+        .yv-timeline-item-tail {
+          top: calc(50% - 10px);
+          height: calc(50% + 10px);
+        }
+      }
+      &:last-child {
+        .yv-timeline-item-tail {
+          display: block;
+          height: calc(50% - 10px);
+        }
+      }
+    }
+
+    &-wrapper {
+      position: relative;
+      top: -3px;
+      padding-left: 28px;
+    }
+
+    &-tail {
+      position: absolute;
+      left: 4px;
+      height: 100%;
+      border-left: 2px solid var(--yv-border-color-light);
+    }
+
+    &-icon {
+      font-size: 13px;
+      color: #fff;
+    }
+
+    &-node {
+      position: absolute;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--yv-border-color-light);
+      border-color: var(--yv-border-color-light);
+      border-radius: 50%;
+
+      &--normal {
+        left: -1px;
+        width: 12px;
+        height: 12px;
+      }
+
+      &--large {
+        left: -2px;
+        width: 14px;
+        height: 14px;
+      }
+
+      &--primary {
+        background-color: var(--yv-color-primary);
+        border-color: var(--yv-color-primary);
+      }
+
+      &--success {
+        background-color: var(--yv-color-success);
+        border-color: #67c23a;
+      }
+
+      &--warning {
+        background-color: var(--yv-color-warning);
+        border-color: var(--yv-color-warning);
+      }
+
+      &--danger {
+        background-color: var(--yv-color-danger);
+        border-color: var(--yv-color-danger);
+      }
+
+      &--info {
+        background-color: var(--yv-color-info);
+        border-color: var(--yv-color-info);
+      }
+      &--hollow {
+        background: #fff;
+        border-style: solid;
+        border-width: 2px;
+      }
+    }
+
+    &-dot {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-content {
+      color: var(--yv-text-color-primary);
+    }
+
+    &-timestamp {
+      font-size: var(--yv-font-size-small);
+      line-height: 1;
+      color: var(--yv-text-color-secondary);
+
+      &-top {
+        padding-top: 4px;
+        margin-bottom: 8px;
+      }
+
+      &-bottom {
+        margin-top: 8px;
+      }
+    }
+  }
+}
